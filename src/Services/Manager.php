@@ -3,7 +3,6 @@
 namespace Pinetcodev\LaravelTranslationOrganizer\Services;
 
 use Barryvdh\TranslationManager\Events\TranslationsExportedEvent;
-
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
@@ -18,8 +17,10 @@ class Manager
 
     /** @var \Illuminate\Contracts\Foundation\Application */
     protected $app;
+
     /** @var \Illuminate\Filesystem\Filesystem */
     protected $files;
+
     /** @var \Illuminate\Contracts\Events\Dispatcher */
     protected $events;
 
@@ -131,7 +132,6 @@ class Manager
 
     public function importTranslation($key, $value, $locale, $group, $replace = false)
     {
-
         // process only string values
         if (is_array($value)) {
             return false;
@@ -139,8 +139,8 @@ class Manager
         $value = (string) $value;
         $translation = Translation::firstOrNew([
             'locale' => $locale,
-            'group'  => $group,
-            'key'    => $key,
+            'group' => $group,
+            'key' => $key,
         ]);
 
         // Check if the database is different then the files
@@ -167,15 +167,15 @@ class Manager
         $functions = $this->config['trans_functions'];
 
         $groupPattern =                          // See https://regex101.com/r/WEJqdL/6
-            "[^\w|>]" .                          // Must not have an alphanum or _ or > before real method
-            '(' . implode('|', $functions) . ')' .  // Must start with one of the functions
-            "\(" .                               // Match opening parenthesis
-            "[\'\"]" .                           // Match " or '
-            '(' .                                // Start a new group to match:
-            '[\/a-zA-Z0-9_-]+' .                 // Must start with group
-            "([.](?! )[^\1)]+)+" .               // Be followed by one or more items/keys
-            ')' .                                // Close group
-            "[\'\"]" .                           // Closing quote
+            "[^\w|>]".                          // Must not have an alphanum or _ or > before real method
+            '('.implode('|', $functions).')'.  // Must start with one of the functions
+            "\(".                               // Match opening parenthesis
+            "[\'\"]".                           // Match " or '
+            '('.                                // Start a new group to match:
+            '[\/a-zA-Z0-9_-]+'.                 // Must start with group
+            "([.](?! )[^\1)]+)+".               // Be followed by one or more items/keys
+            ')'.                                // Close group
+            "[\'\"]".                           // Closing quote
             "[\),]";                             // Close parentheses or new parameter
 
         $stringPattern =
@@ -226,7 +226,7 @@ class Manager
         // Add the translations to the database, if not existing.
         foreach ($groupKeys as $key) {
             // Split the group and item
-            list($group, $item) = explode('.', $key, 2);
+            [$group, $item] = explode('.', $key, 2);
             $this->missingKey('', $group, $item);
         }
 
@@ -242,13 +242,13 @@ class Manager
 
     public function missingKey($namespace, $group, $key)
     {
-     /*   if (! in_array($group, $this->config['exclude_groups'])) {
-            Translation::firstOrCreate([
-                'locale' => $this->app['config']['app.locale'],
-                'group'  => $group,
-                'key'    => $key,
-            ]);
-        }*/
+        /*   if (! in_array($group, $this->config['exclude_groups'])) {
+               Translation::firstOrCreate([
+                   'locale' => $this->app['config']['app.locale'],
+                   'group'  => $group,
+                   'key'    => $key,
+               ]);
+           }*/
     }
 
     public function exportTranslations($group = null, $json = false)

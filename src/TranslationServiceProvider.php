@@ -1,14 +1,13 @@
-<?php namespace Pinetcodev\LaravelTranslationOrganizer;
+<?php
 
+namespace Pinetcodev\LaravelTranslationOrganizer;
 
 use Illuminate\Translation\TranslationServiceProvider as BaseTranslationServiceProvider;
 use Pinetcodev\LaravelTranslationOrganizer\Services\TranslationLoader;
 use Pinetcodev\LaravelTranslationOrganizer\Services\Translator;
 
-
 class TranslationServiceProvider extends BaseTranslationServiceProvider
 {
-
     /**
      * Register the service provider.
      *
@@ -16,12 +15,11 @@ class TranslationServiceProvider extends BaseTranslationServiceProvider
      */
     public function register()
     {
-
         $this->app->singleton('translation-organizer', function ($app) {
             $manager = $app->make('Pinetcodev\LaravelTranslationOrganizer\Services\Manager');
+
             return $manager;
         });
-
 
         $this->app->singleton('translation.loader', function ($app) {
             return new TranslationLoader($app['files'], $app['path.lang']);
@@ -40,14 +38,11 @@ class TranslationServiceProvider extends BaseTranslationServiceProvider
 
             $trans->setFallback($app['config']['app.fallback_locale']);
 
-           if ($app->bound('translation-organizer')) {
+            if ($app->bound('translation-organizer')) {
                 $trans->setTranslationManager($app['translation-organizer']);
             }
 
             return $trans;
         });
-
     }
-
-
 }

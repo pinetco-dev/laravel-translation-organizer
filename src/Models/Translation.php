@@ -1,13 +1,15 @@
-<?php namespace Pinetcodev\LaravelTranslationOrganizer\Models;
+<?php
 
-use Illuminate\Database\Eloquent\Model;
+namespace Pinetcodev\LaravelTranslationOrganizer\Models;
+
 use DB;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Translation model
  *
- * @property integer $id
- * @property integer $status
+ * @property int $id
+ * @property int $status
  * @property string $locale
  * @property string $group
  * @property string $key
@@ -17,11 +19,12 @@ use DB;
  */
 class Translation extends Model
 {
-
     const STATUS_SAVED = 0;
+
     const STATUS_CHANGED = 1;
 
     protected $table = 'lto-translation';
+
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function scopeOfTranslatedGroup($query, $group)

@@ -8,7 +8,6 @@
 
 namespace Pinetcodev\LaravelTranslationOrganizer\Services;
 
-
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Translation\FileLoader;
 
@@ -17,16 +16,15 @@ class TranslationLoader extends FileLoader
     /**
      * Load the messages for the given locale.
      *
-     * @param string $locale
-     * @param string $group
-     * @param string $namespace
-     *
+     * @param  string  $locale
+     * @param  string  $group
+     * @param  string  $namespace
      * @return array
      */
     public function load($locale, $group, $namespace = null)
     {
         if ($group === '*' && $namespace === '*') {
-            $group = "_json";
+            $group = '_json';
         }
 
         if ($namespace !== null && $namespace !== '*') {

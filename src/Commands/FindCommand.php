@@ -1,6 +1,7 @@
 <?php
 
 namespace Pinetcodev\LaravelTranslationOrganizer\Commands;
+
 use Illuminate\Console\Command;
 use Pinetcodev\LaravelTranslationOrganizer\Services\Manager;
 
@@ -32,10 +33,11 @@ class FindCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle() : int
+    public function handle(): int
     {
         $counter = $this->manager->findTranslations(null);
         $this->info('Done importing, processed '.$counter.' items!');
+
         return self::SUCCESS;
     }
 }

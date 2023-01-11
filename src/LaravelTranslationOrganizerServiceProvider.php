@@ -7,7 +7,6 @@ use Pinetcodev\LaravelTranslationOrganizer\Commands\ImportCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-
 class LaravelTranslationOrganizerServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
