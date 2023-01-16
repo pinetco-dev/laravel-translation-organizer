@@ -1,19 +1,19 @@
-<?php namespace Pinetcodev\LaravelTranslationOrganizer\Services;
+<?php
 
+namespace Pinetcodev\LaravelTranslationOrganizer\Services;
 
+use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Arr;
 use Illuminate\Translation\Translator as LaravelTranslator;
-use Illuminate\Events\Dispatcher;
 use Pinetcodev\LaravelTranslationOrganizer\Models\Translation;
 
 class Translator extends LaravelTranslator
 {
-
-    /** @var  Dispatcher */
+    /** @var Dispatcher */
     protected $events;
 
     /**
-     * @var Manager $manager
+     * @var Manager
      */
     protected $manager;
 
@@ -22,12 +22,12 @@ class Translator extends LaravelTranslator
     /**
      * Get the translation for the given key.
      *
-     * @param string $key
-     * @param array $replace
-     * @param string $locale
+     * @param  string  $key
+     * @param  array  $replace
+     * @param  string  $locale
      * @return string
      */
-    public function get($key, array $replace = array(), $locale = null, $fallback = true)
+    public function get($key, array $replace = [], $locale = null, $fallback = true)
     {
         // Get without fallback
 
@@ -37,7 +37,6 @@ class Translator extends LaravelTranslator
 
             // Reget with fallback
             $result = parent::get($key, $replace, $locale, $fallback);
-
         }
 
         self::$pageTranslations[$key] = $result;
@@ -46,7 +45,7 @@ class Translator extends LaravelTranslator
         }
         if ($this->manager->isEnable()) {
             return sprintf("<translation data-id='%s' style='background: %s;'>%s</translation>", $key,
-                $this->manager->getConfig("highlight-color"),
+                $this->manager->getConfig('highlight-color'),
                 $result);
         } else {
             return $result;
@@ -60,7 +59,7 @@ class Translator extends LaravelTranslator
 
     protected function notifyMissingKey($key)
     {
-        list($namespace, $group, $item) = $this->parseKey($key);
+        [$namespace, $group, $item] = $this->parseKey($key);
         if ($this->manager && $namespace === '*' && $group && $item) {
             $this->manager->missingKey($namespace, $group, $item);
         }
@@ -71,16 +70,16 @@ class Translator extends LaravelTranslator
         $data = Translation::where('group', $group)->where('locale', $locale)
             ->get()
             ->map(function (Translation $translation) use ($locale, $group) {
-
                 $key = preg_replace("/{$group}\\./", '', $translation->key, 1);
                 $value = $translation->value;
-                return compact('key', 'value');
 
+                return compact('key', 'value');
             })
             ->pluck('value', 'key')
             ->toArray();
 
         $data = Arr::undot($data);
+
         return $data;
     }
 
@@ -88,5 +87,4 @@ class Translator extends LaravelTranslator
     {
         return self::$pageTranslations;
     }
-
 }

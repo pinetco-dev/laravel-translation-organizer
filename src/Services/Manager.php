@@ -2,7 +2,6 @@
 
 namespace Pinetcodev\LaravelTranslationOrganizer\Services;
 
-
 use Exception;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
@@ -51,7 +50,7 @@ class Manager
 
     protected function getIgnoredLocales()
     {
-        if (!$this->files->exists($this->ignoreFilePath)) {
+        if (! $this->files->exists($this->ignoreFilePath)) {
             return [];
         }
         $result = json_decode($this->files->get($this->ignoreFilePath));
@@ -93,19 +92,19 @@ class Manager
                 if (in_array($group, $this->config['exclude_groups'])) {
                     continue;
                 }
-                $subLangPath = str_replace($langPath . DIRECTORY_SEPARATOR, '', $info['dirname']);
+                $subLangPath = str_replace($langPath.DIRECTORY_SEPARATOR, '', $info['dirname']);
                 $subLangPath = str_replace(DIRECTORY_SEPARATOR, '/', $subLangPath);
                 $langPath = str_replace(DIRECTORY_SEPARATOR, '/', $langPath);
 
                 if ($subLangPath != $langPath) {
-                    $group = $subLangPath . '/' . $group;
+                    $group = $subLangPath.'/'.$group;
                 }
 
-                if (!$vendor) {
+                if (! $vendor) {
                     $translations = \Lang::getLoader()->load($locale, $group);
                 } else {
                     $translations = include $file;
-                    $group = 'vendor/' . $vendorName;
+                    $group = 'vendor/'.$vendorName;
                 }
 
                 if ($translations && is_array($translations)) {
@@ -142,7 +141,7 @@ class Manager
         if (is_array($value)) {
             return false;
         }
-        $value = (string)$value;
+        $value = (string) $value;
         $translation = Translation::firstOrNew([
             'locale' => $locale,
             'group' => $group,
@@ -151,12 +150,12 @@ class Manager
 
         // Check if the database is different then the files
         $newStatus = $translation->value === $value ? Translation::STATUS_SAVED : Translation::STATUS_CHANGED;
-        if ($newStatus !== (int)$translation->status) {
+        if ($newStatus !== (int) $translation->status) {
             $translation->status = $newStatus;
         }
 
         // Only replace when empty, or explicitly told so
-        if ($replace || !$translation->value) {
+        if ($replace || ! $translation->value) {
             $translation->value = $value;
         }
 
@@ -173,24 +172,24 @@ class Manager
         $functions = $this->config['trans_functions'];
 
         $groupPattern =                          // See https://regex101.com/r/WEJqdL/6
-            "[^\w|>]" .                          // Must not have an alphanum or _ or > before real method
-            '(' . implode('|', $functions) . ')' .  // Must start with one of the functions
-            "\(" .                               // Match opening parenthesis
-            "[\'\"]" .                           // Match " or '
-            '(' .                                // Start a new group to match:
-            '[\/a-zA-Z0-9_-]+' .                 // Must start with group
-            "([.](?! )[^\1)]+)+" .               // Be followed by one or more items/keys
-            ')' .                                // Close group
-            "[\'\"]" .                           // Closing quote
+            "[^\w|>]".                          // Must not have an alphanum or _ or > before real method
+            '('.implode('|', $functions).')'.  // Must start with one of the functions
+            "\(".                               // Match opening parenthesis
+            "[\'\"]".                           // Match " or '
+            '('.                                // Start a new group to match:
+            '[\/a-zA-Z0-9_-]+'.                 // Must start with group
+            "([.](?! )[^\1)]+)+".               // Be followed by one or more items/keys
+            ')'.                                // Close group
+            "[\'\"]".                           // Closing quote
             "[\),]";                             // Close parentheses or new parameter
 
         $stringPattern =
-            "[^\w]" .                                     // Must not have an alphanum before real method
-            '(' . implode('|', $functions) . ')' .             // Must start with one of the functions
-            "\(\s*" .                                       // Match opening parenthesis
-            "(?P<quote>['\"])" .                            // Match " or ' and store in {quote}
-            "(?P<string>(?:\\\k{quote}|(?!\k{quote}).)*)" . // Match any string that can be {quote} escaped
-            "\k{quote}" .                                   // Match " or ' previously matched
+            "[^\w]".                                     // Must not have an alphanum before real method
+            '('.implode('|', $functions).')'.             // Must start with one of the functions
+            "\(\s*".                                       // Match opening parenthesis
+            "(?P<quote>['\"])".                            // Match " or ' and store in {quote}
+            "(?P<string>(?:\\\k{quote}|(?!\k{quote}).)*)". // Match any string that can be {quote} escaped
+            "\k{quote}".                                   // Match " or ' previously matched
             "\s*[\),]";                                    // Close parentheses or new parameter
 
         // Find all PHP + Twig files in the app folder, except for storage
@@ -218,7 +217,7 @@ class Manager
                     //TODO: This can probably be done in the regex, but I couldn't do it.
                     //skip keys which contain namespacing characters, unless they also contain a
                     //space, which makes it JSON.
-                    if (!(Str::contains($key, '::') && Str::contains($key, '.'))
+                    if (! (Str::contains($key, '::') && Str::contains($key, '.'))
                         || Str::contains($key, ' ')) {
                         $stringKeys[] = $key;
                     }
@@ -262,8 +261,8 @@ class Manager
         $group = basename($group);
         $basePath = $this->app['path.lang'];
 
-        if (!is_null($group) && !$json) {
-            if (!in_array($group, $this->config['exclude_groups'])) {
+        if (! is_null($group) && ! $json) {
+            if (! in_array($group, $this->config['exclude_groups'])) {
                 $vendor = false;
                 if ($group == '*') {
                     return $this->exportAllTranslations();
@@ -283,9 +282,9 @@ class Manager
                         $translations = $groups[$group];
                         $path = $this->app['path.lang'];
 
-                        $locale_path = $locale . DIRECTORY_SEPARATOR . $group;
+                        $locale_path = $locale.DIRECTORY_SEPARATOR.$group;
                         if ($vendor) {
-                            $path = $basePath . '/' . $group . '/' . $locale;
+                            $path = $basePath.'/'.$group.'/'.$locale;
                             $locale_path = Str::after($group, '/');
                         }
                         $subfolders = explode(DIRECTORY_SEPARATOR, $locale_path);
@@ -293,21 +292,21 @@ class Manager
 
                         $subfolder_level = '';
                         foreach ($subfolders as $subfolder) {
-                            $subfolder_level = $subfolder_level . $subfolder . DIRECTORY_SEPARATOR;
+                            $subfolder_level = $subfolder_level.$subfolder.DIRECTORY_SEPARATOR;
 
-                            $temp_path = rtrim($path . DIRECTORY_SEPARATOR . $subfolder_level, DIRECTORY_SEPARATOR);
-                            if (!is_dir($temp_path)) {
+                            $temp_path = rtrim($path.DIRECTORY_SEPARATOR.$subfolder_level, DIRECTORY_SEPARATOR);
+                            if (! is_dir($temp_path)) {
                                 mkdir($temp_path, 0777, true);
                             }
                         }
 
                         if ($vendor) {
-                            $path = $path . DIRECTORY_SEPARATOR . 'messages.php';
+                            $path = $path.DIRECTORY_SEPARATOR.'messages.php';
                         } else {
-                            $path = $path . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . $group . '.php';
+                            $path = $path.DIRECTORY_SEPARATOR.$locale.DIRECTORY_SEPARATOR.$group.'.php';
                         }
 
-                        $output = "<?php\n\nreturn " . var_export($translations, true) . ';' . \PHP_EOL;
+                        $output = "<?php\n\nreturn ".var_export($translations, true).';'.\PHP_EOL;
                         $this->files->put($path, $output);
                     }
                 }
@@ -323,7 +322,7 @@ class Manager
             foreach ($tree as $locale => $groups) {
                 if (isset($groups[self::JSON_GROUP])) {
                     $translations = $groups[self::JSON_GROUP];
-                    $path = $this->app['path.lang'] . '/' . $locale . '.json';
+                    $path = $this->app['path.lang'].'/'.$locale.'.json';
                     $output = json_encode($translations, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE);
                     $this->files->put($path, $output);
                 }
@@ -406,13 +405,13 @@ class Manager
 
     public function addLocale($locale)
     {
-        $localeDir = $this->app->langPath() . '/' . basename($locale);
+        $localeDir = $this->app->langPath().'/'.basename($locale);
 
         $this->ignoreLocales = array_diff($this->ignoreLocales, [$locale]);
         $this->saveIgnoredLocales();
         $this->ignoreLocales = $this->getIgnoredLocales();
 
-        if (!$this->files->exists($localeDir) || !$this->files->isDirectory($localeDir)) {
+        if (! $this->files->exists($localeDir) || ! $this->files->isDirectory($localeDir)) {
             return $this->files->makeDirectory($localeDir);
         }
 
@@ -426,7 +425,7 @@ class Manager
 
     public function removeLocale($locale)
     {
-        if (!$locale) {
+        if (! $locale) {
             return false;
         }
         $this->ignoreLocales = array_merge($this->ignoreLocales, [$locale]);
@@ -450,17 +449,16 @@ class Manager
         return $this->getConfig('enabled');
     }
 
-
     /**
      * Modify the response and inject the translation model (or data in headers)
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param  \Symfony\Component\HttpFoundation\Request  $request
+     * @param  \Symfony\Component\HttpFoundation\Response  $response
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function modifyResponse($request, $response)
     {
-        if (!$this->isEnable()) {
+        if (! $this->isEnable()) {
             return $response;
         }
 
@@ -473,11 +471,10 @@ class Manager
         } else {
             $this->injectTranslation($response);
         }
-
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param  \Symfony\Component\HttpFoundation\Request  $request
      * @return bool
      */
     protected function isJsonRequest(Request $request)
@@ -489,8 +486,8 @@ class Manager
 
         // Check if the request wants Json
         $acceptable = $request->getAcceptableContentTypes();
-        return (isset($acceptable[0]) && $acceptable[0] == 'application/json');
 
+        return isset($acceptable[0]) && $acceptable[0] == 'application/json';
     }
 
     protected function injectTranslation(Response $response)
@@ -499,9 +496,9 @@ class Manager
         $widget = $this->render();
         $pos = strripos($content, '</body>');
         if (false !== $pos) {
-            $content = substr($content, 0, $pos) . $widget . substr($content, $pos);
+            $content = substr($content, 0, $pos).$widget.substr($content, $pos);
         } else {
-            $content = $content . $widget;
+            $content = $content.$widget;
         }
 
         $original = null;
@@ -517,20 +514,19 @@ class Manager
         if ($original) {
             $response->original = $original;
         }
-
     }
 
     protected function render()
     {
-        return view("translation-organizer::translation-organizer");
-        $compileString = Blade::compileString(file_get_contents($this->getConfig("")));
+        return view('translation-organizer::translation-organizer');
+        $compileString = Blade::compileString(file_get_contents($this->getConfig('')));
         $obLevel = ob_get_level();
         ob_start();
         $sharedData = array_merge(view()->getShared(), $data);
         extract($sharedData, EXTR_SKIP);
 
         try {
-            eval('?' . '>' . $compileString);
+            eval('?'.'>'.$compileString);
         } catch (Exception $e) {
             while (ob_get_level() > $obLevel) {
                 ob_end_clean();

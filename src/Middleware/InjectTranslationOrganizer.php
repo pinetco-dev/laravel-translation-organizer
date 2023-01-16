@@ -12,17 +12,16 @@ use Throwable;
 
 class InjectTranslationOrganizer
 {
-
     /**
-     * @var Manager $manager ;
+     * @var Manager ;
      */
     protected Manager $manager;
 
     /**
      * Create a new middleware instance.
      *
-     * @param Container $container
-     * @param Manager $manager
+     * @param  Container  $container
+     * @param  Manager  $manager
      */
     public function __construct(Container $container, Manager $manager)
     {
@@ -34,14 +33,14 @@ class InjectTranslationOrganizer
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
         // here check if translation inject is enable.
-        if (!$this->manager->isEnable()) {
+        if (! $this->manager->isEnable()) {
             return $next($request);
         }
 
@@ -53,9 +52,9 @@ class InjectTranslationOrganizer
         }
 
         $this->manager->modifyResponse($request, $response);
+
         return $response;
     }
-
 
     /**
      * Handle the given exception.
@@ -63,13 +62,14 @@ class InjectTranslationOrganizer
      * (Copy from Illuminate\Routing\Pipeline by Taylor Otwell)
      *
      * @param $passable
-     * @param Throwable $e
+     * @param  Throwable  $e
      * @return mixed
+     *
      * @throws Exception
      */
     protected function handleException($passable, $e)
     {
-        if (!$this->container->bound(ExceptionHandler::class) || !$passable instanceof Request) {
+        if (! $this->container->bound(ExceptionHandler::class) || ! $passable instanceof Request) {
             throw $e;
         }
 

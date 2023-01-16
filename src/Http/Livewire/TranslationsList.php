@@ -24,13 +24,12 @@ class TranslationsList extends Component
     public function getTranslations(): LengthAwarePaginator
     {
         $search = $this->search;
+
         return Translation::when($this->search, function ($query) use ($search) {
-              $query->where('key','like',"%$search%")
-                  ->orWhere('group','like',"%$search%");
-            })->groupBy("key")
+            $query->where('key', 'like', "%$search%")
+                ->orWhere('group', 'like', "%$search%");
+        })->groupBy('key')
             ->paginate(12)->onEachSide(0);
-
-
     }
 
     public function confirmDelete(Translation $translation)

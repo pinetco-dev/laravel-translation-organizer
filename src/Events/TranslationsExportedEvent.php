@@ -8,10 +8,8 @@
 
 namespace Pinetcodev\LaravelTranslationOrganizer\Events;
 
-
 class TranslationsExportedEvent
 {
-
     /**
      * Create a new event instance.
      *
@@ -19,6 +17,5 @@ class TranslationsExportedEvent
      */
     public function __construct()
     {
-
     }
 }

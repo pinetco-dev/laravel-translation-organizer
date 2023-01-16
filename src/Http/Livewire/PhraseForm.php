@@ -42,21 +42,21 @@ class PhraseForm extends Component
 
         $this->notification()->success('Translation updated successfully!');
 
-       /* $nextPhrase = $this->translation
-            ->where('id', '>', $this->translation->id)
-            ->whereNull('value')
-            ->first();
+        /* $nextPhrase = $this->translation
+             ->where('id', '>', $this->translation->id)
+             ->whereNull('value')
+             ->first();
 
-        if ($nextPhrase) {
-            $this->redirect(route('translation_organizer.phrases.show', [
-                'phrase' => $nextPhrase,
-                'translation' => $this->translation,
-            ]));
+         if ($nextPhrase) {
+             $this->redirect(route('translation_organizer.phrases.show', [
+                 'phrase' => $nextPhrase,
+                 'translation' => $this->translation,
+             ]));
 
-            return;
-        }
+             return;
+         }
 
-        $this->redirect(route('translation_organizer.phrases.index', $this->translation));*/
+         $this->redirect(route('translation_organizer.phrases.index', $this->translation));*/
     }
 
     public function missingParameters(): bool
