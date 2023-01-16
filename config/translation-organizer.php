@@ -2,6 +2,7 @@
 
 // config for Pinetcodev/LaravelTranslationOrganizer
 
+
 return [
 
     /*
@@ -12,15 +13,54 @@ return [
     | The default group settings for the elFinder routes.
     |
     */
+    'enabled' => env('TRANSLATION_ENABLED', true),
+    'highlight-color' => "aqua",
     'route' => [
         'prefix' => 'translations',
         'middleware' => 'auth',
     ],
 
+    'langs' => ["en" => "English", "de" => "German" ],
+
+    /*
+  |--------------------------------------------------------------------------
+  | Laravel Translations Path
+  |--------------------------------------------------------------------------
+  |
+  | The default is `translations` but you can change it to whatever works best and
+  | doesn't conflict with the routing in your application.
+  |
+  */
+    'path' => env('TRANSLATIONS_PATH', 'translation-organizer'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Laravel Translations Custom Domain
+    |--------------------------------------------------------------------------
+    | You may change the domain where Laravel Translations should be active.
+    | If the domain is empty, all domains will be valid.
+    |
+    */
+    'domain' => env('TRANSLATIONS_DOMAIN', null),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Laravel Translations route middleware
+    |--------------------------------------------------------------------------
+    |
+    | These middleware will be assigned to every Laravel Translations route, giving you
+    | the chance to add your own middleware to this list or change any of
+    | the existing middleware. Or, you can simply stick with this list.
+    |
+    */
+
+    'middleware' => ['web'],
+
+
     /**
      * Enable deletion of translations
      *
-     * @type bool
+     * @type boolean
      */
     'delete_enabled' => true,
 
