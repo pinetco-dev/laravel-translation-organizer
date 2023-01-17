@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\CacheClearCommand;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\ExportCommand;
-use Pinetcodev\LaravelTranslationOrganizer\Commands\FindCommand;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\ImportCommand;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\PublishCommand;
 use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\Modals\CreateSourceKey;
@@ -74,7 +73,7 @@ class LaravelTranslationOrganizerServiceProvider extends PackageServiceProvider
             'namespace' => 'Pinetcodev\LaravelTranslationOrganizer\Http\Controllers',
             'middleware' => config('translation-organizer.middleware', 'web'),
         ], function () {
-            $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         });
     }
 }

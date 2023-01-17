@@ -2,7 +2,6 @@
 
 // config for Pinetcodev/LaravelTranslationOrganizer
 
-
 return [
 
     /*
@@ -14,13 +13,13 @@ return [
     |
     */
     'enabled' => env('TRANSLATION_ENABLED', true),
-    'highlight-color' => "aqua",
+    'highlight-color' => 'aqua',
     'route' => [
         'prefix' => 'translations',
         'middleware' => 'auth',
     ],
 
-    'langs' => ["en" => "English", "de" => "German" ],
+    'langs' => ['en' => 'English', 'de' => 'German'],
 
     /*
   |--------------------------------------------------------------------------
@@ -56,11 +55,10 @@ return [
 
     'middleware' => ['web'],
 
-
     /**
      * Enable deletion of translations
      *
-     * @type boolean
+     * @type bool
      */
     'delete_enabled' => true,
 
