@@ -63,7 +63,7 @@ class PhraseForm extends Component
     {
         if (is_array($this->phrase->source->parameters)) {
             foreach ($this->phrase->source->parameters as $parameter) {
-                if (!str_contains($this->phrase->value, ":$parameter")) {
+                if (! str_contains($this->phrase->value, ":$parameter")) {
                     return true;
                 }
             }

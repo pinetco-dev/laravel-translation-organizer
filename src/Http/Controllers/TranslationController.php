@@ -2,17 +2,14 @@
 
 namespace Pinetcodev\LaravelTranslationOrganizer\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\View\View;
 use Pinetcodev\LaravelTranslationOrganizer\Models\Translation;
-
 
 class TranslationController extends Controller
 {
     public function __construct()
     {
-
     }
 
     public function index(): View
@@ -31,12 +28,12 @@ class TranslationController extends Controller
 
     public function phrase(Translation $translation)
     {
-
         $translations = Translation::where('key', $translation->key)
             ->whereIn('locale', array_keys(config('translation-organizer.langs')))
             ->where('group', $translation->group)->get();
 
         $this->checkAndAddMissingLocale($translations);
+
         return view('translation-organizer::phrase', [
             'translations' => $translations,
         ]);
@@ -46,13 +43,13 @@ class TranslationController extends Controller
     {
         $missionLocales = $this->getMissingTranslation($translations);
 
-        if (!empty($missionLocales)) {
+        if (! empty($missionLocales)) {
             foreach ($missionLocales as $locale) {
                 $translation = Translation::create([
                     'locale' => $locale,
                     'group' => $translations->first()->group,
                     'key' => $translations->first()->key,
-                    'value' => ''
+                    'value' => '',
                 ]);
                 $translations->push($translation);
             }
@@ -62,6 +59,7 @@ class TranslationController extends Controller
     public function getMissingTranslation($translations)
     {
         $currentTranslations = $translations->pluck('locale')->toArray();
+
         return array_diff(array_keys(config('translation-organizer.langs')), $currentTranslations);
     }
 }

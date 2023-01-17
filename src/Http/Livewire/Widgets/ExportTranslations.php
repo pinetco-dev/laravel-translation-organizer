@@ -3,11 +3,9 @@
 namespace Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\Widgets;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Artisan;
 use Livewire\Component;
 use Pinetcodev\LaravelTranslationOrganizer\Services\Manager;
 use WireUi\Traits\Actions;
-use function Orchestra\Testbench\artisan;
 
 class ExportTranslations extends Component
 {

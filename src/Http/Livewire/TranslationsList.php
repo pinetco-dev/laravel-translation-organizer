@@ -24,14 +24,13 @@ class TranslationsList extends Component
     public function getTranslations(): LengthAwarePaginator
     {
         $search = $this->search;
-        return Translation::when($this->search, function ($query) use ($search) {
+
+        return Translation::when($this->search, function ($query) {
             $query->where('key', 'like', "%$this->search%")
                 ->orWhere('group', 'like', "%$this->search%")
                 ->orWhere('value', 'like', "%$this->search%");
-        })->groupBy("key")
+        })->groupBy('key')
             ->paginate(12)->onEachSide(0);
-
-
     }
 
     public function confirmDelete(Translation $translation)
@@ -50,8 +49,8 @@ class TranslationsList extends Component
     public function delete(Translation $translation)
     {
         DB::transaction(function () use ($translation) {
-            Translation::where("key", $translation->key)
-                ->where("group", $translation->group)->delete();
+            Translation::where('key', $translation->key)
+                ->where('group', $translation->group)->delete();
             $this->notification()->success('Translation deleted successfully!');
         });
     }
