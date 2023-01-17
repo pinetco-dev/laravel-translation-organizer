@@ -46,7 +46,7 @@ class Translator extends LaravelTranslator
             return $result;
         }
         if ($this->manager->isEnable()) {
-            return sprintf("<translation data-id='%s'>%s</translation>",Str::slug($key), $result);
+            return sprintf("<translation data-id='%s'>%s</translation>",$key, $result);
         } else {
             return $result;
         }
