@@ -25,9 +25,10 @@ class TranslationsList extends Component
     {
         $search = $this->search;
         return Translation::when($this->search, function ($query) use ($search) {
-              $query->where('key','like',"%$search%")
-                  ->orWhere('group','like',"%$search%");
-            })->groupBy("key")
+            $query->where('key', 'like', "%$this->search%")
+                ->orWhere('group', 'like', "%$this->search%")
+                ->orWhere('value', 'like', "%$this->search%");
+        })->groupBy("key")
             ->paginate(12)->onEachSide(0);
 
 
@@ -49,9 +50,8 @@ class TranslationsList extends Component
     public function delete(Translation $translation)
     {
         DB::transaction(function () use ($translation) {
-            $translation->phrases()->delete();
-            $translation->delete();
-
+            Translation::where("key", $translation->key)
+                ->where("group", $translation->group)->delete();
             $this->notification()->success('Translation deleted successfully!');
         });
     }

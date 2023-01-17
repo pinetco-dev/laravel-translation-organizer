@@ -3,9 +3,11 @@
 namespace Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\Widgets;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Artisan;
 use Livewire\Component;
-use Outhebox\LaravelTranslations\TranslationsManager;
+use Pinetcodev\LaravelTranslationOrganizer\Services\Manager;
 use WireUi\Traits\Actions;
+use function Orchestra\Testbench\artisan;
 
 class ExportTranslations extends Component
 {
@@ -13,8 +15,8 @@ class ExportTranslations extends Component
 
     public function export()
     {
-        app(TranslationsManager::class)->export();
-
+        $manager = resolve(Manager::class);
+        $manager->exportAllTranslations();
         $this->notification()->success('Translations exported successfully!');
     }
 

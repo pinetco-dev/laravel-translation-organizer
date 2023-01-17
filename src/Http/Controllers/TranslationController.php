@@ -31,10 +31,12 @@ class TranslationController extends Controller
 
     public function phrase(Translation $translation)
     {
+
         $translations = Translation::where('key', $translation->key)
             ->whereIn('locale', array_keys(config('translation-organizer.langs')))
             ->where('group', $translation->group)->get();
-        $this->checkAndAddMissingLocale($translation);
+
+        $this->checkAndAddMissingLocale($translations);
         return view('translation-organizer::phrase', [
             'translations' => $translations,
         ]);
@@ -43,6 +45,7 @@ class TranslationController extends Controller
     public function checkAndAddMissingLocale(&$translations)
     {
         $missionLocales = $this->getMissingTranslation($translations);
+
         if (!empty($missionLocales)) {
             foreach ($missionLocales as $locale) {
                 $translation = Translation::create([
@@ -59,6 +62,6 @@ class TranslationController extends Controller
     public function getMissingTranslation($translations)
     {
         $currentTranslations = $translations->pluck('locale')->toArray();
-        return array_keys(config('translation-organizer.langs'), $currentTranslations);
+        return array_diff(array_keys(config('translation-organizer.langs')), $currentTranslations);
     }
 }

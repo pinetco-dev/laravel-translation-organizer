@@ -41,6 +41,7 @@ class InjectTranslationOrganizer
     public function handle(Request $request, Closure $next)
     {
         // here check if translation inject is enable.
+
         if (!$this->manager->isEnable()) {
             return $next($request);
         }

@@ -17,7 +17,7 @@
             <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded-lg overflow-x-auto">
                 <div class="min-w-full divide-y divide-gray-300">
                     <div class="bg-gray-50 flex items-center">
-                        <div class="w-1/4 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                        <div class="w-1/5 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                             Key
                         </div>
                         <div class="w-1/2 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
@@ -26,7 +26,7 @@
                         <div class="w-1/5  py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                             Group
                         </div>
-                        <div class="w-15 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                        <div class="w-10 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                             Action
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                                             {{ $translation->group }}
                                         </div>
                                         <div
-                                            class="w-15  pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 flex flex-row">
+                                            class="w-10  pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 flex flex-row">
                                             <a href="{{ route('translation_organizer.show', $translation) }}"
                                                class="text-gray-400 hover:text-violet-700 ml-auto relative z-50">
                                                 <x-iconsax-lin-setting-2 class="w-5 h-5"/>

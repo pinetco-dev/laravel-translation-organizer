@@ -7,8 +7,10 @@ use Exception;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Pinetcodev\LaravelTranslationOrganizer\Events\TranslationsExportedEvent;
 use Pinetcodev\LaravelTranslationOrganizer\Models\Translation;
@@ -307,8 +309,9 @@ class Manager
                             $path = $path . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . $group . '.php';
                         }
 
-                        $output = "<?php\n\nreturn " . var_export($translations, true) . ';' . \PHP_EOL;
+                        $output = "<?php\n\nreturn " . $this->varExport($translations, true) . ';' . \PHP_EOL;
                         $this->files->put($path, $output);
+                        Cache::forget("locale.organizer.{$locale}.{$group}");
                     }
                 }
                 Translation::ofTranslatedGroup($group)->update(['status' => Translation::STATUS_SAVED]);
@@ -326,6 +329,7 @@ class Manager
                     $path = $this->app['path.lang'] . '/' . $locale . '.json';
                     $output = json_encode($translations, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE);
                     $this->files->put($path, $output);
+                    Cache::forget("locale.organizer.{$locale}.{$group}");
                 }
             }
 
@@ -464,11 +468,16 @@ class Manager
             return $response;
         }
 
-        if (($response->headers->has('Content-Type') &&
+        if ($this->isJsonRequest($request)) {
+            $content = $response->getContent();
+            $content = preg_replace('/&lt;/', "<", $content);
+            $content = preg_replace('/&gt;/', ">", $content);
+            $response->setContent($content);
+            return $response;
+        } else if (($response->headers->has('Content-Type') &&
                 strpos($response->headers->get('Content-Type'), 'html') === false) ||
             $request->getRequestFormat() !== 'html' ||
-            $response->getContent() === false ||
-            $this->isJsonRequest($request)) {
+            $response->getContent() === false) {
             return $response;
         } else {
             $this->injectTranslation($response);
@@ -509,6 +518,13 @@ class Manager
             $original = $response->getOriginalContent();
         }
 
+        $content = preg_replace('/&lt;/', "<", $content);
+        $content = preg_replace('/&gt;/', ">", $content);
+        //     $content = preg_replace('/&lt;translation/', "<translation", $content);
+        //    $content = preg_replace("/&lt;[\/]{1}translation&gt;[ ]{0,}[\n]{0,}/", "</translation>", $content);
+        //  $content = preg_replace('/"[ ]{0,}[\n]{0,}<translation/', "<translation", $content);
+        //  $content = preg_replace('/<\/translation>[ ]{0,}[\n]{0,}"/', "</translation>", $content);
+
         // Update the new content and reset the content length
         $response->setContent($content);
         $response->headers->remove('Content-Length');
@@ -548,8 +564,12 @@ class Manager
         return $contents;
     }
 
-    protected function getBladePath()
-    {
-        //$exists = resource_path("")
+    public function varExport($expression, $return=FALSE) {
+        $export = var_export($expression, TRUE);
+        $export = preg_replace("/^([ ]*)(.*)/m", '$1$1$2', $export);
+        $array = preg_split("/\r\n|\n|\r/", $export);
+        $array = preg_replace(["/\s*array\s\($/", "/\)(,)?$/", "/\s=>\s$/"], [NULL, ']$1', ' => ['], $array);
+        $export = join(PHP_EOL, array_filter(["["] + $array));
+        if ((bool)$return) return $export; else echo $export;
     }
 }

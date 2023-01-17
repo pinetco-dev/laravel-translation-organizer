@@ -2,6 +2,7 @@
 
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Translation\Translator as LaravelTranslator;
 use Illuminate\Events\Dispatcher;
 use Pinetcodev\LaravelTranslationOrganizer\Models\Translation;
@@ -45,9 +46,7 @@ class Translator extends LaravelTranslator
             return $result;
         }
         if ($this->manager->isEnable()) {
-            return sprintf("<translation data-id='%s' style='background: %s;'>%s</translation>", $key,
-                $this->manager->getConfig("highlight-color"),
-                $result);
+            return sprintf("<translation data-id='%s'>%s</translation>",Str::slug($key), $result);
         } else {
             return $result;
         }
@@ -68,20 +67,10 @@ class Translator extends LaravelTranslator
 
     public static function getGroup($group, $locale): array
     {
-        $data = Translation::where('group', $group)->where('locale', $locale)
-            ->get()
-            ->map(function (Translation $translation) use ($locale, $group) {
-
-                $key = preg_replace("/{$group}\\./", '', $translation->key, 1);
-                $value = $translation->value;
-                return compact('key', 'value');
-
-            })
+        return Arr::undot( Translation::where('group', $group)->where('locale', $locale)
             ->pluck('value', 'key')
-            ->toArray();
+            ->toArray());
 
-        $data = Arr::undot($data);
-        return $data;
     }
 
     public static function getUsedTranslations()

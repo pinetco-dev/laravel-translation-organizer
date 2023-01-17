@@ -5,6 +5,7 @@ namespace Pinetcodev\LaravelTranslationOrganizer;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
+use Pinetcodev\LaravelTranslationOrganizer\Commands\CacheClearCommand;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\ExportCommand;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\FindCommand;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\ImportCommand;
@@ -36,8 +37,13 @@ class LaravelTranslationOrganizerServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasAssets()
             ->hasMigration('create_translation_organizer_table')
-            ->hasCommands(
-                ImportCommand::class, PublishCommand::class, ExportCommand::class);
+            ->hasCommands([
+                ImportCommand::class,
+                PublishCommand::class,
+                ExportCommand::class,
+                CacheClearCommand::class
+            ]);
+
     }
 
     public function boot()
