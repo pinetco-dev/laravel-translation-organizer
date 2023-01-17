@@ -16,8 +16,6 @@ use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\SourcePhrase;
 use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\TranslationsList;
 use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\Widgets\ExportTranslations;
 use Pinetcodev\LaravelTranslationOrganizer\Middleware\InjectTranslationOrganizer;
-use Pinetcodev\LaravelTranslationOrganizer\Services\TranslationLoader;
-use Pinetcodev\LaravelTranslationOrganizer\Services\Translator;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -75,8 +73,7 @@ class LaravelTranslationOrganizerServiceProvider extends PackageServiceProvider
             'namespace' => 'Pinetcodev\LaravelTranslationOrganizer\Http\Controllers',
             'middleware' => config('translation-organizer.middleware', 'web'),
         ], function () {
-            $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         });
     }
-
 }
