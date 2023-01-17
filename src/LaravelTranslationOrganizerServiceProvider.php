@@ -40,9 +40,8 @@ class LaravelTranslationOrganizerServiceProvider extends PackageServiceProvider
                 ImportCommand::class,
                 PublishCommand::class,
                 ExportCommand::class,
-                CacheClearCommand::class
+                CacheClearCommand::class,
             ]);
-
     }
 
     public function boot()
