@@ -43,7 +43,8 @@ class Translator extends LaravelTranslator
         if (is_array($result)) {
             return $result;
         }
-        if ($this->manager->isEnable()) {
+
+        if ($this->manager->isEnable() && $this->manager->isInline()) {
             return sprintf("<translation data-id='%s'>%s</translation>", $key, $result);
         } else {
             return $result;

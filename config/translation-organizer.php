@@ -13,6 +13,7 @@ return [
     |
     */
     'enabled' => env('TRANSLATION_ENABLED', true),
+    'enabled_on_page' => env('TRANSLATION_ON_PAGE', true),
     'highlight-color' => 'aqua',
     'route' => [
         'prefix' => 'translations',
