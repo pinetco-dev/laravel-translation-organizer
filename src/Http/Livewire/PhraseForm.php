@@ -42,6 +42,9 @@ class PhraseForm extends Component
 
         $this->notification()->success('Translation updated successfully!');
 
+        cache()->forget(sprintf("locale.organizer.%s.%s",
+            $this->translation->locale, $this->translation->group));
+
         /* $nextPhrase = $this->translation
              ->where('id', '>', $this->translation->id)
              ->whereNull('value')

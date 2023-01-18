@@ -16,9 +16,9 @@ class TranslationLoader extends FileLoader
     /**
      * Load the messages for the given locale.
      *
-     * @param  string  $locale
-     * @param  string  $group
-     * @param  string  $namespace
+     * @param string $locale
+     * @param string $group
+     * @param string $namespace
      * @return array
      */
     public function load($locale, $group, $namespace = null)
@@ -30,7 +30,6 @@ class TranslationLoader extends FileLoader
         if ($namespace !== null && $namespace !== '*') {
             return $this->loadNamespaced($locale, $group, $namespace);
         }
-
         //  return Translator::getGroup($group, $locale);
 
         return Cache::rememberForever("locale.organizer.{$locale}.{$group}",
