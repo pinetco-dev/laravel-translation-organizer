@@ -27,7 +27,7 @@ return [
   | Laravel Translations Path
   |--------------------------------------------------------------------------
   |
-  | The default is `translations` but you can change it to whatever works best and
+  | The default is `translations-organizer` but you can change it to whatever works best and
   | doesn't conflict with the routing in your application.
   |
   */

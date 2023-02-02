@@ -8,3 +8,4 @@ Route::get('/', [TranslationController::class, 'index'])->name('translation_orga
 Route::prefix('phrases')->group(function () {
     Route::get('/edit/{translation}', [TranslationController::class, 'phrase'])->name('translation_organizer.show');
 });
+Route::post('/', [TranslationController::class, 'store'])->name('translation_organizer.store');

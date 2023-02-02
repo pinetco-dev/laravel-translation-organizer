@@ -13,9 +13,11 @@ return new class extends Migration
             $table->integer('status')->default(0);
             $table->string('locale');
             $table->string('group');
-            $table->text('key');
-            $table->text('value')->nullable();
+            $table->string('key', 500);
+            $table->string('value', 1000)->nullable();
             $table->timestamps();
+            $table->index('group');
+            $table->index('key');
         });
     }
 
