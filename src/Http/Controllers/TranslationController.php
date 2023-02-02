@@ -44,7 +44,7 @@ class TranslationController extends Controller
     {
         $missionLocales = $this->getMissingTranslation($translations);
 
-        if (!empty($missionLocales)) {
+        if (! empty($missionLocales)) {
             foreach ($missionLocales as $locale) {
                 $translation = Translation::create([
                     'locale' => $locale,
@@ -70,30 +70,28 @@ class TranslationController extends Controller
         $groups = collect($translations)->pluck('group')->unique()->toArray();
 
         foreach ($translations as $translation) {
-            if (is_array($translation["translations"]) && !empty($translation["translations"])) {
-                foreach ($translation["translations"] as $locale => $value) {
+            if (is_array($translation['translations']) && ! empty($translation['translations'])) {
+                foreach ($translation['translations'] as $locale => $value) {
                     $key = preg_replace("/{$translation['group']}\\./", '', $translation['key'], 1);
 
                     $result = Translation::firstOrCreate([
                         'group' => $translation['group'],
                         'locale' => $locale,
-                        'key' => $key
+                        'key' => $key,
                     ]);
                     $result->value = $value;
                     $result->save();
-
                 }
             }
-
         }
 
         foreach ($groups as $group) {
             foreach (array_keys(config('translation-organizer.langs')) as $locale) {
-                cache()->forget(sprintf("locale.organizer.%s.%s",
+                cache()->forget(sprintf('locale.organizer.%s.%s',
                     $locale, $group));
             }
         }
 
-        return response()->json(["data" => [], "status" => true]);
+        return response()->json(['data' => [], 'status' => true]);
     }
 }
