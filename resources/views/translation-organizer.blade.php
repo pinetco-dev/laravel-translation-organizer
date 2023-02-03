@@ -66,7 +66,7 @@
                                 <button onclick="save()" id="translation-submit"
                                         class="flex items-center px-4 py-2 border border-white rounded-md bg-green-300
                                         font-semibold">
-                                    <div role="status" id="translation-submit-loader" class="">
+                                    <div role="status" id="translation-submit-loader" class="hidden">
                                         <svg aria-hidden="true"
                                              class="w-6 h-6 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-900"
                                              viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

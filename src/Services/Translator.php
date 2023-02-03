@@ -40,6 +40,16 @@ class Translator extends LaravelTranslator
         }
 
         if (is_array($result)) {
+
+            if($key === "*"){
+                return $result;
+            }
+
+            $translationKeys = array_keys(Arr::dot($result));
+            $translationKeys = array_map(function ($item) use ($key){
+               return $key.'.'.$item;
+            },$translationKeys);
+            self::$pageTranslations = array_merge( self::$pageTranslations, $translationKeys);
             return $result;
         }
 
