@@ -41,7 +41,7 @@
                                         </div>
                                         <div
                                             class="w-1/2  pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            {{ trans($translation->group.".".$translation->key) }}
+                                            {{ $translation->value ? $translation->value : $translation->key  }}
                                         </div>
                                         <div
                                             class="w-1/5  pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">

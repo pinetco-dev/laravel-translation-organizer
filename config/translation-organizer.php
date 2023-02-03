@@ -12,8 +12,8 @@ return [
     | The default group settings for the elFinder routes.
     |
     */
-    'enabled' => env('TRANSLATION_ENABLED', true),
-    'enabled_on_page' => env('TRANSLATION_ON_PAGE', true),
+    'enabled' => env('TRANSLATION_ENABLED', false),
+    'enabled_on_page' => env('TRANSLATION_ON_PAGE', false),
     'highlight-color' => 'aqua',
     'route' => [
         'prefix' => 'translations',
