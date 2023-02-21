@@ -19,9 +19,6 @@ class InjectTranslationOrganizer
 
     /**
      * Create a new middleware instance.
-     *
-     * @param  Container  $container
-     * @param  Manager  $manager
      */
     public function __construct(Container $container, Manager $manager)
     {
@@ -33,8 +30,6 @@ class InjectTranslationOrganizer
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
-     * @param  Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -62,7 +57,6 @@ class InjectTranslationOrganizer
      *
      * (Copy from Illuminate\Routing\Pipeline by Taylor Otwell)
      *
-     * @param $passable
      * @param  Throwable  $e
      * @return mixed
      *

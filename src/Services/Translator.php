@@ -23,7 +23,6 @@ class Translator extends LaravelTranslator
      * Get the translation for the given key.
      *
      * @param  string  $key
-     * @param  array  $replace
      * @param  string  $locale
      * @return string
      */
