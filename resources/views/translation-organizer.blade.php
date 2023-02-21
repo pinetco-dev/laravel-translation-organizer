@@ -139,9 +139,10 @@
     </div>
 
     <script>
-        var color = {!!  json_encode(config("translation-organizer.highlight-color")) !!};
-        var langs = {!!  json_encode(array_keys(config("translation-organizer.langs"))) !!};
-        var url = {!!  json_encode(route("translation_organizer.store")) !!};
+        var color = @json(config("translation-organizer.highlight-color"));
+        var langs = @json(array_keys(config("translation-organizer.langs")));
+        var url = @json(route("translation_organizer.store"));
+        var csrf = @json(csrf_token());
 
         var translations = document.getElementsByTagName("translation");
 
@@ -228,7 +229,7 @@
                 credentials: 'same-origin',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': csrf
                 },
                 body: JSON.stringify(collections)
             }).then((data) => {
