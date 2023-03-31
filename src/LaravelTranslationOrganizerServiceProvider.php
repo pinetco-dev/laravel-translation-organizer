@@ -56,12 +56,12 @@ class LaravelTranslationOrganizerServiceProvider extends PackageServiceProvider
 
     protected function registerLivewireComponents()
     {
-     /*   Livewire::component('translations-ui::phrase-form', PhraseForm::class);
-        Livewire::component('translations-ui::source-phrase', SourcePhrase::class);
-        Livewire::component('translations-ui::translations-list', TranslationsList::class);
-        Livewire::component('translations-ui::export-translations', ExportTranslations::class);
-        Livewire::component('translations-ui::create-source-key-modal', CreateSourceKey::class);
-        Livewire::component('translations-ui::create-translation-modal', CreateTranslation::class);*/
+        /*   Livewire::component('translations-ui::phrase-form', PhraseForm::class);
+           Livewire::component('translations-ui::source-phrase', SourcePhrase::class);
+           Livewire::component('translations-ui::translations-list', TranslationsList::class);
+           Livewire::component('translations-ui::export-translations', ExportTranslations::class);
+           Livewire::component('translations-ui::create-source-key-modal', CreateSourceKey::class);
+           Livewire::component('translations-ui::create-translation-modal', CreateTranslation::class);*/
     }
 
     protected function registerRoutes()

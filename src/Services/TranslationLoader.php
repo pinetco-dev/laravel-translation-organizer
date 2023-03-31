@@ -8,7 +8,6 @@
 
 namespace Pinetcodev\LaravelTranslationOrganizer\Services;
 
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Translation\FileLoader;
 
 class TranslationLoader extends FileLoader
