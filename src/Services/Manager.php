@@ -2,12 +2,10 @@
 
 namespace Pinetcodev\LaravelTranslationOrganizer\Services;
 
-use Exception;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Pinetcodev\LaravelTranslationOrganizer\Events\TranslationsExportedEvent;
@@ -15,7 +13,6 @@ use Pinetcodev\LaravelTranslationOrganizer\Models\Translation;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Throwable;
 
 class Manager
 {

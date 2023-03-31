@@ -22,8 +22,8 @@ class Translator extends LaravelTranslator
     /**
      * Get the translation for the given key.
      *
-     * @param string $key
-     * @param string $locale
+     * @param  string  $key
+     * @param  string  $locale
      * @return string
      */
     public function get($key, array $replace = [], $locale = null, $fallback = true)
@@ -47,7 +47,7 @@ class Translator extends LaravelTranslator
 
             $translationKeys = array_keys(Arr::dot($result));
             $translationKeys = array_map(function ($item) use ($key) {
-                return $key . '.' . $item;
+                return $key.'.'.$item;
             }, $translationKeys);
             self::$pageTranslations = array_merge(self::$pageTranslations, $translationKeys);
 
@@ -56,9 +56,9 @@ class Translator extends LaravelTranslator
 
         [$namespace, $group, $item] = $this->parseKey($key);
         logger($key);
-        if (empty($item) || stristr($key, " ")) {
+        if (empty($item) || stristr($key, ' ')) {
             logger($key);
-            self::$pageTranslations[$key] = ['group' => "_json", 'item' => $key];
+            self::$pageTranslations[$key] = ['group' => '_json', 'item' => $key];
         } else {
             self::$pageTranslations[$key] = ['group' => $group, 'item' => $item];
         }
@@ -85,12 +85,11 @@ class Translator extends LaravelTranslator
 
     public static function getGroup($group, $locale): array
     {
-
         $result = Translation::where('group', $group)->where('locale', $locale)
             ->pluck('value', 'key')
             ->toArray();
 
-        if ($group != "_json") {
+        if ($group != '_json') {
             return Arr::undot($result);
         }
 
@@ -146,20 +145,20 @@ class Translator extends LaravelTranslator
         // Convert all dashes/underscores into separator
         $flip = $separator === '-' ? '_' : '-';
 
-        $title = preg_replace('![' . preg_quote($flip) . ']+!u', $separator, $title);
+        $title = preg_replace('!['.preg_quote($flip).']+!u', $separator, $title);
 
         // Replace dictionary words
         foreach ($dictionary as $key => $value) {
-            $dictionary[$key] = $separator . $value . $separator;
+            $dictionary[$key] = $separator.$value.$separator;
         }
 
         $title = str_replace(array_keys($dictionary), array_values($dictionary), $title);
 
         // Remove all characters that are not the separator, letters, numbers, or whitespace
-        $title = preg_replace('![^' . preg_quote($separator) . '\pL\pN\s]+!u', '', strtolower($title));
+        $title = preg_replace('![^'.preg_quote($separator).'\pL\pN\s]+!u', '', strtolower($title));
 
         // Replace all separator characters and whitespace by a single separator
-        $title = preg_replace('![' . preg_quote($separator) . '\s]+!u', $separator, $title);
+        $title = preg_replace('!['.preg_quote($separator).'\s]+!u', $separator, $title);
 
         return trim($title, $separator);
     }
