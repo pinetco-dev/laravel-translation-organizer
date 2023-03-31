@@ -80,7 +80,7 @@ class TranslationController extends Controller
                         ->where(DB::raw('BINARY `key`'), $key)
                         ->first();
 
-                    if (empty($translation)) {
+                    if (empty($result)) {
                         $result = new Translation();
                         $result->fill([
                             'locale' => $locale,
