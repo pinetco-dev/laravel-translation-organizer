@@ -32,9 +32,6 @@ class TranslationLoader extends FileLoader
         }
         //  return Translator::getGroup($group, $locale);
 
-        return Cache::rememberForever("locale.organizer.{$locale}.{$group}",
-            function () use ($group, $locale) {
-                return Translator::getGroup($group, $locale);
-            });
+        return Translator::getGroup($group, $locale);
     }
 }

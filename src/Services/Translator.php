@@ -43,10 +43,10 @@ class Translator extends LaravelTranslator
                 return $result;
             }
 
-            $translationKeys = array_keys(Arr::dot($result));
+          /*  $translationKeys = array_keys(Arr::dot($result));
             foreach ($translationKeys as $translationKey) {
                 self::$pageTranslations[$key] = ['group' => $key, 'item' => $translationKey];
-            }
+            }*/
 
             return $result;
         }

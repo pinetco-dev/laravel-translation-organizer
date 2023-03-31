@@ -4,17 +4,16 @@ namespace Pinetcodev\LaravelTranslationOrganizer;
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\Facades\Route;
-use Livewire\Livewire;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\CacheClearCommand;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\ExportCommand;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\ImportCommand;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\PublishCommand;
-use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\Modals\CreateSourceKey;
+/*use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\Modals\CreateSourceKey;
 use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\Modals\CreateTranslation;
 use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\PhraseForm;
 use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\SourcePhrase;
 use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\TranslationsList;
-use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\Widgets\ExportTranslations;
+use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\Widgets\ExportTranslations;*/
 use Pinetcodev\LaravelTranslationOrganizer\Middleware\InjectTranslationOrganizer;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -57,12 +56,12 @@ class LaravelTranslationOrganizerServiceProvider extends PackageServiceProvider
 
     protected function registerLivewireComponents()
     {
-        Livewire::component('translations-ui::phrase-form', PhraseForm::class);
+     /*   Livewire::component('translations-ui::phrase-form', PhraseForm::class);
         Livewire::component('translations-ui::source-phrase', SourcePhrase::class);
         Livewire::component('translations-ui::translations-list', TranslationsList::class);
         Livewire::component('translations-ui::export-translations', ExportTranslations::class);
         Livewire::component('translations-ui::create-source-key-modal', CreateSourceKey::class);
-        Livewire::component('translations-ui::create-translation-modal', CreateTranslation::class);
+        Livewire::component('translations-ui::create-translation-modal', CreateTranslation::class);*/
     }
 
     protected function registerRoutes()

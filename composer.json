@@ -18,11 +18,7 @@
     "require": {
         "php": "^7.4",
         "spatie/laravel-package-tools": "1.12.1",
-        "illuminate/contracts": "^8.0",
-        "livewire/livewire": "^2.10",
-        "saade/blade-iconsax": "^1.0",
-        "wire-elements/modal": "^1.0",
-        "wireui/wireui": "0.x-dev"
+        "illuminate/contracts": "^8.0"
     },
     "require-dev": {
         "orchestra/testbench": "^5.0|^6.23|^7.0",

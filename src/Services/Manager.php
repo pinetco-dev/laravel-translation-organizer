@@ -120,7 +120,6 @@ class Manager
                 continue;
             }
             $locale = basename($jsonTranslationFile, '.json');
-
             $group = self::JSON_GROUP;
             $translations =
                 \Lang::getLoader()->load($locale, '*', '*'); // Retrieves JSON entries of the given locale only
@@ -143,7 +142,7 @@ class Manager
             return false;
         }
 
-        logger($key);
+
         $value = (string) $value;
 
         $translation = Translation::where(DB::raw('BINARY `locale`'), $locale)

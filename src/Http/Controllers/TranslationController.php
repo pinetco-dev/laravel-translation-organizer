@@ -89,6 +89,7 @@ class TranslationController extends Controller
                         ]);
                     }
 
+
                     $result->value = $value;
                     $result->save();
                 }
