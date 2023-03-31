@@ -63,6 +63,20 @@
                                 <h2 class="text-lg font-medium text-gray-900" id="snide-over-title">Translation
                                     Organizer</h2>
 
+
+                                <button onclick="toggleTranslation(0)" id="translation-stop"
+                                        class="flex items-center px-4 py-2 border border-white rounded-md bg-green-300
+                                        font-semibold">
+                                    Stop On Page
+                                </button>
+
+                                <button onclick="toggleTranslation(1)" id="translation-show"
+                                        class="flex items-center px-4 py-2 border border-white rounded-md bg-green-300
+                                        font-semibold">
+                                    Show On Page
+                                </button>
+
+
                                 <button onclick="save()" id="translation-submit"
                                         class="flex items-center px-4 py-2 border border-white rounded-md bg-green-300
                                         font-semibold">
@@ -143,9 +157,8 @@
         var langs = @json(array_keys(config("translation-organizer.langs")));
         var url = @json(route("translation_organizer.store"));
         var csrf = @json(csrf_token());
-
+        var onPageTranslation = getCookie("TRANSLATION_ON_PAGE");
         var translations = document.getElementsByTagName("translation");
-
 
         function openTranslationDialog() {
             const dialog = document.getElementById("translation-dialog")
@@ -184,6 +197,41 @@
                     }
                 });
             }
+        }
+
+
+        function eraseCookie(name) {
+            document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        }
+
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function toggleTranslation(value) {
+            if (value) {
+                setCookie('TRANSLATION_ON_PAGE', 'true', 15);
+            } else {
+                eraseCookie('TRANSLATION_ON_PAGE');
+            }
+            location.reload();
         }
 
         function listenTranslationPaste() {
@@ -253,7 +301,14 @@
             document.getElementById('translation-submit-loader').classList.add("hidden");
         }
 
-        markTranslation();
+        if (onPageTranslation) {
+            markTranslation();
+            document.getElementById('translation-stop').classList.remove("hidden");
+            document.getElementById('translation-show').classList.add("hidden");
+        }else{
+            document.getElementById('translation-stop').classList.add("hidden");
+            document.getElementById('translation-show').classList.remove("hidden");
+        }
         listenTranslationPaste();
 
     </script>

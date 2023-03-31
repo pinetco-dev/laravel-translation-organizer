@@ -540,29 +540,6 @@ class Manager
     protected function render()
     {
         return view('translation-organizer::translation-organizer');
-        $compileString = Blade::compileString(file_get_contents($this->getConfig('')));
-        $obLevel = ob_get_level();
-        ob_start();
-        $sharedData = array_merge(view()->getShared(), $data);
-        extract($sharedData, EXTR_SKIP);
-
-        try {
-            eval('?'.'>'.$compileString);
-        } catch (Exception $e) {
-            while (ob_get_level() > $obLevel) {
-                ob_end_clean();
-            }
-            throw $e;
-        } catch (Throwable $e) {
-            while (ob_get_level() > $obLevel) {
-                ob_end_clean();
-            }
-            //throw new FatalThrowableError($e);
-        }
-
-        $contents = ob_get_clean();
-
-        return $contents;
     }
 
     public function varExport($expression, $return = false)
