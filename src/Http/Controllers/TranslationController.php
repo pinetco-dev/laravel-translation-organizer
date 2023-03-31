@@ -4,6 +4,7 @@ namespace Pinetcodev\LaravelTranslationOrganizer\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Pinetcodev\LaravelTranslationOrganizer\Models\Translation;
 
@@ -74,11 +75,20 @@ class TranslationController extends Controller
                 foreach ($translation['translations'] as $locale => $value) {
                     $key = preg_replace("/{$translation['group']}\\./", '', $translation['key'], 1);
 
-                    $result = Translation::firstOrCreate([
-                        'group' => $translation['group'],
-                        'locale' => $locale,
-                        'key' => $key,
-                    ]);
+                    $result = Translation::where(DB::raw('BINARY `locale`'), $locale)
+                        ->where(DB::raw('BINARY `group`'), $translation['group'])
+                        ->where(DB::raw('BINARY `key`'), $key)
+                        ->first();
+
+                    if (empty($translation)) {
+                        $result = new Translation();
+                        $result->fill([
+                            'locale' => $locale,
+                            'group' => $translation['group'],
+                            'key' => $key,
+                        ]);
+                    }
+
                     $result->value = $value;
                     $result->save();
                 }

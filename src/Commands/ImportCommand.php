@@ -36,6 +36,7 @@ class ImportCommand extends Command
      */
     public function handle(): int
     {
+
         $replace = $this->option('replace');
         $counter = $this->manager->importTranslations($replace);
         $this->info('Done importing, processed '.$counter.' items!');
