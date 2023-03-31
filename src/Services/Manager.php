@@ -142,7 +142,6 @@ class Manager
             return false;
         }
 
-
         $value = (string) $value;
 
         $translation = Translation::where(DB::raw('BINARY `locale`'), $locale)
