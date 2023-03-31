@@ -39,25 +39,20 @@ class Translator extends LaravelTranslator
         }
 
         if (is_array($result)) {
-            return $result;
 
             if ($key === '*') {
                 return $result;
             }
 
             $translationKeys = array_keys(Arr::dot($result));
-            $translationKeys = array_map(function ($item) use ($key) {
-                return $key . '.' . $item;
-            }, $translationKeys);
-            self::$pageTranslations = array_merge(self::$pageTranslations, $translationKeys);
-
+            foreach ($translationKeys as $translationKey) {
+                self::$pageTranslations[$key] = ['group' => $key, 'item' => $translationKey];
+            }
             return $result;
         }
 
         [$namespace, $group, $item] = $this->parseKey($key);
-        logger($key);
         if (empty($item) || stristr($key, " ")) {
-            logger($key);
             self::$pageTranslations[$key] = ['group' => "_json", 'item' => $key];
         } else {
             self::$pageTranslations[$key] = ['group' => $group, 'item' => $item];

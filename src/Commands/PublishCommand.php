@@ -18,12 +18,12 @@ class PublishCommand extends Command
         ]);
 
         $this->call('vendor:publish', [
-            '--tag' => 'translation-organizer-assets',
+            '--tag' => 'translation-organizer-migration',
             '--force' => true,
         ]);
 
         $this->call('vendor:publish', [
-            '--tag' => 'translation-organizer-migration',
+            '--tag' => 'translation-organizer-views',
             '--force' => true,
         ]);
     }

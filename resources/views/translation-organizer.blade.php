@@ -162,12 +162,12 @@
 
         function openTranslationDialog() {
             const dialog = document.getElementById("translation-dialog")
-            dialog.style.cssText = "z-index: 10000; display: block";
+            dialog.style.cssText = "z-index: 100000; display: block";
         }
 
         function closeDialog() {
             const dialog = document.getElementById("translation-dialog")
-            dialog.style.cssText = "z-index: 10000; display: none";
+            dialog.style.cssText = "z-index: 100000; display: none";
         }
 
         document.onkeydown = function (event) {
@@ -283,7 +283,7 @@
             }).then((data) => {
                 endLoader();
                 if (data.ok) {
-                    alert("Updated successfully.");
+                   location.reload();
                 } else {
                     alert("Something went wrong")
                 }
