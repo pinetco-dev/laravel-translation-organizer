@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/translation-organizer/translation.css') }}">
 </head>
 <body class="font-sans antialiased">
-<div class="min-h-full">
+<div class="min-h-full" id="laravel-translation-organizer-modal">
     {{ $slot }}
 </div>
 </body>
