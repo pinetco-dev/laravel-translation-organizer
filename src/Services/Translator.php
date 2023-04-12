@@ -11,6 +11,7 @@ class Translator extends LaravelTranslator
 {
     /** @var Dispatcher */
     protected $events;
+
     /**
      * @var Manager
      */
