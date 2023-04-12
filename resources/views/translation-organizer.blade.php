@@ -156,9 +156,10 @@
         var color = @json(config("translation-organizer.highlight-color"));
         var langs = @json(array_keys(config("translation-organizer.langs")));
         var url = @json(route("translation_organizer.store"));
+        var translationFetch = url;
         var csrf = @json(csrf_token());
         var onPageTranslation = getCookie("TRANSLATION_ON_PAGE");
-        var translations = document.getElementsByTagName("translation");
+        var headerName = "laravel-translation-organizer-id";
 
         function openTranslationDialog() {
             const dialog = document.getElementById("translation-dialog")
@@ -178,8 +179,9 @@
 
 
         function markTranslation() {
+
+            var translations = document.getElementsByTagName("translation");
             for (var i = 0; i < translations.length; i++) {
-                const btn = document.createElement("BUTTON");
                 translations[i].style.cssText = 'background: ' + color;
                 translations[i].addEventListener("click", event => {
                     if (event.altKey) {
@@ -187,8 +189,6 @@
                         const id = event.target.dataset.id;
                         openTranslationDialog();
                         const element = document.getElementById(id);
-
-
                         setTimeout(function () {
                             element.setAttribute('tabindex', '0');
                             element.focus();
@@ -197,6 +197,7 @@
                     }
                 });
             }
+
         }
 
 
@@ -236,6 +237,7 @@
 
         function listenTranslationPaste() {
             const translationLocales = document.querySelectorAll('[data-locale]');
+            var translations = document.getElementsByTagName("translation");
             for (var i = 0; i < translations.length; i++) {
                 translationLocales[i].addEventListener("paste", function (e) {
                     e.preventDefault();
@@ -283,7 +285,7 @@
             }).then((data) => {
                 endLoader();
                 if (data.ok) {
-                   location.reload();
+                    location.reload();
                 } else {
                     alert("Something went wrong")
                 }
@@ -305,11 +307,138 @@
             markTranslation();
             document.getElementById('translation-stop').classList.remove("hidden");
             document.getElementById('translation-show').classList.add("hidden");
-        }else{
+        } else {
             document.getElementById('translation-stop').classList.add("hidden");
             document.getElementById('translation-show').classList.remove("hidden");
         }
+
+        function bindToXHR() {
+            var self = this;
+            var proxied = XMLHttpRequest.prototype.open;
+
+            XMLHttpRequest.prototype.open = function (method, url, async, user, pass) {
+                var xhr = this;
+                this.addEventListener("readystatechange", function () {
+                    var skipUrl = translationFetch + "/fetch/";
+                    var href = (typeof url === 'string') ? url : url.href;
+                    if (xhr.readyState == 4 && href.indexOf(skipUrl) !== 0) {
+                        handle(xhr);
+                    }
+                }, false);
+                proxied.apply(this, Array.prototype.slice.call(arguments));
+            };
+        }
+
+        function bindToFetch() {
+            //   var self = this;
+            var proxied = window.fetch;
+            if (proxied !== undefined && proxied.polyfill !== undefined) {
+                return;
+            }
+
+            window.fetch = function () {
+                var promise = proxied.apply(this, arguments);
+                var skipUrl = translationFetch + "/fetch/";
+
+                promise.then(function (response) {
+                    handle(response);
+                });
+                return promise;
+            };
+        }
+
+        function isFetch(response) {
+            return Object.prototype.toString.call(response) == '[object Response]'
+        }
+
+        function isXHR(response) {
+            return Object.prototype.toString.call(response) == '[object XMLHttpRequest]'
+        }
+
+        function loadFromId(response) {
+            var id = extractIdFromHeaders(response);
+            if (id) {
+                return id;
+            }
+            return false;
+        }
+
+        function extractIdFromHeaders(response) {
+            return getHeader(response, 'laravel-translation-organizer-id');
+        }
+
+        function getHeader(response, header) {
+            if (isFetch(response)) {
+                return response.headers.get(header)
+            }
+            return response.getResponseHeader(header)
+        }
+
+        function handle(response) {
+            // Check if the debugbar header is available
+            if (isFetch(response) && !response.headers.has(headerName)) {
+                return true;
+            } else if (isXHR(response) && response.getAllResponseHeaders().indexOf(headerName) === -1) {
+                return true;
+            }
+            var id = loadFromId(response);
+            if (id) {
+                fetch(translationFetch + "/fetch/" + id, {
+                    method: 'get',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrf
+                    }
+                }).then((data) => {
+                    if (data.ok) {
+                        markTranslation();
+                    } else {
+                        alert("Something went wrong")
+                    }
+                });
+                markTranslation();
+            }
+            return true;
+        }
+
+        function loadFromData(response) {
+            var raw = extractDataFromHeaders(response);
+            if (!raw) {
+                return false;
+            }
+
+            var data = parseHeaders(raw);
+            if (data.error) {
+                throw new Error('Error loading debugbar data: ' + data.error);
+            } else if (data.data) {
+                alert(data.data);
+            }
+            return true;
+        }
+
+        function parseHeaders(data) {
+            return JSON.parse(data);
+        }
+
+        function extractDataFromHeaders(response) {
+            var data = getHeader(response, 'laravel-translation-organizer-id');
+            if (!data) {
+                return;
+            }
+            for (var i = 1; ; i++) {
+                var header = getHeader(response, 'laravel-translation-organizer-id' + '-' + i);
+                if (!header) {
+                    break;
+                }
+                data += header;
+            }
+            return decodeURIComponent(data);
+        }
+
         listenTranslationPaste();
+        bindToXHR();
+        bindToFetch();
 
     </script>
 </x-translation-organizer::layouts.modal>

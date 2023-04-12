@@ -45,7 +45,7 @@ class TranslationController extends Controller
     {
         $missionLocales = $this->getMissingTranslation($translations);
 
-        if (! empty($missionLocales)) {
+        if (!empty($missionLocales)) {
             foreach ($missionLocales as $locale) {
                 $translation = Translation::create([
                     'locale' => $locale,
@@ -71,7 +71,7 @@ class TranslationController extends Controller
         $groups = collect($translations)->pluck('group')->unique()->toArray();
 
         foreach ($translations as $translation) {
-            if (is_array($translation['translations']) && ! empty($translation['translations'])) {
+            if (is_array($translation['translations']) && !empty($translation['translations'])) {
                 foreach ($translation['translations'] as $locale => $value) {
                     $key = preg_replace("/{$translation['group']}\\./", '', $translation['key'], 1);
 
@@ -94,14 +94,15 @@ class TranslationController extends Controller
                 }
             }
         }
-
-        foreach ($groups as $group) {
-            foreach (array_keys(config('translation-organizer.langs')) as $locale) {
-                cache()->forget(sprintf('locale.organizer.%s.%s',
-                    $locale, $group));
-            }
-        }
-
         return response()->json(['data' => [], 'status' => true]);
+    }
+
+    public function fetch($requestId)
+    {
+        $config = config();
+        $driver = $config->get('debugbar.storage.driver', 'file');
+        $data = cache()->driver($driver)->get($requestId);
+        cache()->driver($driver)->delete($requestId);
+        return response()->json(['data' => $data, 'status' => true]);
     }
 }

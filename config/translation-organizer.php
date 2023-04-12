@@ -111,5 +111,5 @@ return [
      * Database connection name to allow for different db connection for the translations table.
      */
     'db_connection' => env('TRANSLATION_ORGANIZER_DB_CONNECTION', null),
-
+    'storage.driver' => env('TRANSLATION_ORGANIZER_STORAGE', 'file'),
 ];

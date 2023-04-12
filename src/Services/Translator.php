@@ -11,7 +11,6 @@ class Translator extends LaravelTranslator
 {
     /** @var Dispatcher */
     protected $events;
-
     /**
      * @var Manager
      */
@@ -93,6 +92,7 @@ class Translator extends LaravelTranslator
 
     public static function getUsedTranslations()
     {
+
         $allTranslation = [];
         $groups = Translation::distinct()->get('group')->pluck('group')->toArray();
         $groups[] = '*';
