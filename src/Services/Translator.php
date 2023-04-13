@@ -126,7 +126,8 @@ class Translator extends LaravelTranslator
                 $langTranslations[$locale] = $translation ? $translation->value : '';
             }
 
-            $allTranslation[] = ['id' => self::generateId($key),
+            $id = self::generateId($key);
+            $allTranslation[$id] = ['id' => $id,
                 'key' => $key,
                 'translations' => $langTranslations, 'group' => $group];
         }

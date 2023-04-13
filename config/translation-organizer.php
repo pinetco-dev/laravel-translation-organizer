@@ -112,4 +112,5 @@ return [
      */
     'db_connection' => env('TRANSLATION_ORGANIZER_DB_CONNECTION', null),
     'storage.driver' => env('TRANSLATION_ORGANIZER_STORAGE', 'file'),
+    'capture_ajax' => false
 ];

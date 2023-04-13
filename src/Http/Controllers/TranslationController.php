@@ -103,6 +103,17 @@ class TranslationController extends Controller
         $driver = $config->get('debugbar.storage.driver', 'file');
         $data = cache()->driver($driver)->get($requestId);
         cache()->driver($driver)->delete($requestId);
-        return response()->json(['data' => $data, 'status' => true]);
+        $translations = [];
+        if ($data && isset($data['translations'])) {
+            foreach ($data['translations'] as $translation) {
+                $translations[] =
+                    [
+                        'html' => view('translation-organizer::partials.translation-row', compact('translation'))->render(),
+                        'id' => $translation['id']
+                    ];
+            }
+            return response()->json(['data' => $translations, 'status' => true]);
+        }
+        return response()->json(['data' => [], 'status' => true]);
     }
 }

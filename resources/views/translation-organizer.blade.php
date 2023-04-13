@@ -100,45 +100,9 @@
                                 <!-- Replace with your content -->
                                 <div class="shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                                     <table class="min-w-full font-semibold divide-y divide-gray-100">
-                                        <tbody class="bg-white divide-y divide-gray-300">
+                                        <tbody class="bg-white divide-y divide-gray-300" id="translation-html">
                                         @foreach(\Pinetcodev\LaravelTranslationOrganizer\Services\Translator::getUsedTranslations() as $translation)
-                                            <tr class="divide-x divide-gray-300 focus:bg-gray-400"
-                                                id="{{$translation['id']}}" translate
-                                                data-key="{{$translation['key']}}"
-                                                data-group="{{$translation['group']}}">
-                                                <td class="relative py-2 pl-4 pr-4 text-black group" width="30%">
-                                                    <div class="" data-translation="translation">
-                                                        <p> {{ $translation['key'] }}</p>
-                                                    </div>
-                                                </td>
-                                                <td width="70%">
-                                                    <table width="100%">
-                                                        <tbody class="bg-white divide-y divide-gray-300">
-                                                        @foreach($translation["translations"] as $locale => $translationValue )
-                                                            @if($loop->index == 0)
-                                                                <tr class="divide-x divide-gray-300">
-                                                                    <td class="py-2 pl-4 pr-4 text-black bg-gray-100/30"
-                                                                        width="25%"> {{$locale}}
-                                                                    </td>
-                                                                    <td class="py-2 pl-4 pr-4 text-red-500"
-                                                                        width="75%" contenteditable="true"
-                                                                        data-locale="{{$locale}}"
-                                                                    >  {{$translationValue}}</td>
-                                                                </tr>
-                                                            @else
-                                                                <tr class="divide-x divide-gray-300">
-                                                                    <td class="py-2 pl-4 pr-4 text-green-700 bg-green-300"
-                                                                        width="25%">{{$locale}}</td>
-                                                                    <td class="py-2 pl-4 pr-4 text-gray-700"
-                                                                        width="75%" contenteditable="true"
-                                                                        data-locale="{{$locale}}">{{$translationValue}}</td>
-                                                                </tr>
-                                                            @endif
-                                                        @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
+                                            @include('translation-organizer::partials.translation-row', $translation)
                                         @endforeach
                                         </tbody>
                                     </table>
@@ -186,12 +150,12 @@
                 translations[i].addEventListener("click", event => {
                     if (event.altKey) {
                         event.preventDefault();
-                        const id = event.target.dataset.id;
+                        const id = 'translation-' + event.target.dataset.id;
                         openTranslationDialog();
                         const element = document.getElementById(id);
                         setTimeout(function () {
-                            element.setAttribute('tabindex', '0');
                             element.focus();
+                            element.setAttribute('tabindex', "0");
                             element.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
                         }, 500);
                     }
@@ -338,8 +302,6 @@
 
             window.fetch = function () {
                 var promise = proxied.apply(this, arguments);
-                var skipUrl = translationFetch + "/fetch/";
-
                 promise.then(function (response) {
                     handle(response);
                 });
@@ -374,7 +336,7 @@
             return response.getResponseHeader(header)
         }
 
-        function handle(response) {
+        async function handle(response) {
             // Check if the debugbar header is available
             if (isFetch(response) && !response.headers.has(headerName)) {
                 return true;
@@ -383,20 +345,30 @@
             }
             var id = loadFromId(response);
             if (id) {
-                fetch(translationFetch + "/fetch/" + id, {
+                var result = await fetch(translationFetch + "/fetch/" + id, {
                     method: 'get',
                     credentials: 'same-origin',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': csrf
                     }
-                }).then((data) => {
-                    if (data.ok) {
-                        markTranslation();
-                    } else {
-                        alert("Something went wrong")
-                    }
                 });
+
+                if (result.ok) {
+                    var response = await result.json()
+                    if (response.data) {
+                        var translationHtml = document.getElementById('translation-html');
+                        for (var i = 0; i < response.data.length; i++) {
+                            if (!document.getElementById("translation-" + response.data[i].id)) {
+                                translationHtml.innerHTML += response.data[i].html;
+                            }
+                        }
+                    }
+                } else {
+                    alert("Something went wrong")
+                }
+
+
                 markTranslation();
             }
             return true;
@@ -442,5 +414,3 @@
 
     </script>
 </x-translation-organizer::layouts.modal>
-
-
