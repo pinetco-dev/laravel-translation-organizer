@@ -633,8 +633,8 @@ class Manager
     protected function storeData()
     {
         $config = $this->app['config'];
-        if ($config->get('debugbar.storage.enabled')) {
-            $driver = $config->get('debugbar.storage.driver', 'file');
+        if ($config->get('translation-organizer.storage.enabled')) {
+            $driver = $config->get('translation-organizer.storage.driver', 'file');
             cache()->driver($driver)->set($this->requestId, $this->data);
         }
     }
