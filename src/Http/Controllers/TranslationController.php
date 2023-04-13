@@ -110,11 +110,13 @@ class TranslationController extends Controller
                 $translations[] =
                     [
                         'html' => view('translation-organizer::partials.translation-row', compact('translation'))->render(),
-                        'id' => $translation['id']
+                        'id' => $translation['id'],
                     ];
             }
+
             return response()->json(['data' => $translations, 'status' => true]);
         }
+
         return response()->json(['data' => [], 'status' => true]);
     }
 }
