@@ -2,7 +2,6 @@
 
 namespace Pinetcodev\LaravelTranslationOrganizer\Commands;
 
-
 use Illuminate\Console\Command;
 use Pinetcodev\LaravelTranslationOrganizer\Services\Manager;
 

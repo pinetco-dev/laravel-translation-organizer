@@ -40,7 +40,7 @@ class LaravelTranslationOrganizerServiceProvider extends PackageServiceProvider
                 PublishCommand::class,
                 ExportCommand::class,
                 CacheClearCommand::class,
-                FindCommand::class
+                FindCommand::class,
             ]);
     }
 
