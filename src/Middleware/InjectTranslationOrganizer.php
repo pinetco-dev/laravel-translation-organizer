@@ -24,7 +24,6 @@ class InjectTranslationOrganizer
     {
         $this->container = $container;
         $this->manager = $manager;
-        //$this->except = config('debugbar.except') ?: [];
     }
 
     /**

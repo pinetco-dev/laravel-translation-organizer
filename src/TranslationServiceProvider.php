@@ -15,6 +15,10 @@ class TranslationServiceProvider extends BaseTranslationServiceProvider
      */
     public function register()
     {
+        $config = config();
+        $driver = $config->get('translation-organizer.storage.driver', 'file');
+        $translationOnPage = cache()->driver($driver)->get('TRANSLATION_ON_PAGE');
+        $config->set('translation-organizer.enabled_on_page', $translationOnPage ? true : false);
         if (config('translation-organizer.enabled')) {
             $this->app->singleton('translation-organizer', function ($app) {
                 $manager = $app->make('Pinetcodev\LaravelTranslationOrganizer\Services\Manager');

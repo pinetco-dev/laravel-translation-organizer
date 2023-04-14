@@ -63,19 +63,19 @@
                                 <h2 class="text-lg font-medium text-gray-900" id="snide-over-title">Translation
                                     Organizer</h2>
 
-
-                                <button onclick="toggleTranslation(0)" id="translation-stop"
-                                        class="flex items-center px-4 py-2 border border-white rounded-md bg-green-300
+                                @if(config('translation-organizer.enabled_on_page'))
+                                    <button onclick="toggleTranslation('disable')" id="translation-stop"
+                                            class="flex items-center px-4 py-2 border border-white rounded-md bg-green-300
                                         font-semibold">
-                                    Stop On Page
-                                </button>
-
-                                <button onclick="toggleTranslation(1)" id="translation-show"
-                                        class="flex items-center px-4 py-2 border border-white rounded-md bg-green-300
+                                        Stop On Page
+                                    </button>
+                                @else
+                                    <button onclick="toggleTranslation('enable')" id="translation-show"
+                                            class="flex items-center px-4 py-2 border border-white rounded-md bg-green-300
                                         font-semibold">
-                                    Show On Page
-                                </button>
-
+                                        Show On Page
+                                    </button>
+                                @endif
 
                                 <button onclick="save()" id="translation-submit"
                                         class="flex items-center px-4 py-2 border border-white rounded-md bg-green-300
@@ -120,9 +120,10 @@
         var color = @json(config("translation-organizer.highlight-color"));
         var langs = @json(array_keys(config("translation-organizer.langs")));
         var url = @json(route("translation_organizer.store"));
+        var toggleTranslationURL = @json(route("translation_organizer.toggle"));
         var translationFetch = url;
+        var isOnPageTranslationEnable =  @json(config("translation-organizer.enabled_on_page"));
         var csrf = @json(csrf_token());
-        var onPageTranslation = getCookie("TRANSLATION_ON_PAGE");
         var headerName = "laravel-translation-organizer-id";
 
         function openTranslationDialog() {
@@ -144,6 +145,10 @@
 
         function markTranslation() {
 
+            if (!isOnPageTranslationEnable) {
+                return;
+            }
+
             var translations = document.getElementsByTagName("translation");
             for (var i = 0; i < translations.length; i++) {
                 translations[i].style.cssText = 'background: ' + color;
@@ -164,38 +169,24 @@
 
         }
 
-
-        function eraseCookie(name) {
-            document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        }
-
-        function setCookie(name, value, days) {
-            var expires = "";
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
-        }
-
-        function getCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-
         function toggleTranslation(value) {
-            if (value) {
-                setCookie('TRANSLATION_ON_PAGE', 'true', 15);
-            } else {
-                eraseCookie('TRANSLATION_ON_PAGE');
-            }
+            fetch(toggleTranslationURL, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrf
+                },
+                body: JSON.stringify({'value': value})
+            }).then((data) => {
+                endLoader();
+                if (data.ok) {
+                    location.reload();
+                } else {
+                    alert("Something went wrong")
+                }
+            });
+
             location.reload();
         }
 
@@ -265,15 +256,6 @@
         function endLoader() {
             document.getElementById('translation-submit').removeAttribute("disabled");
             document.getElementById('translation-submit-loader').classList.add("hidden");
-        }
-
-        if (onPageTranslation) {
-            markTranslation();
-            document.getElementById('translation-stop').classList.remove("hidden");
-            document.getElementById('translation-show').classList.add("hidden");
-        } else {
-            document.getElementById('translation-stop').classList.add("hidden");
-            document.getElementById('translation-show').classList.remove("hidden");
         }
 
         function bindToXHR() {
@@ -368,7 +350,6 @@
                     alert("Something went wrong")
                 }
 
-
                 markTranslation();
             }
             return true;
@@ -411,6 +392,7 @@
         listenTranslationPaste();
         bindToXHR();
         bindToFetch();
+        markTranslation();
 
     </script>
 </x-translation-organizer::layouts.modal>
