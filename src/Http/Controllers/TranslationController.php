@@ -45,13 +45,13 @@ class TranslationController extends Controller
     {
         $missionLocales = $this->getMissingTranslation($translations);
 
-        if (!empty($missionLocales)) {
+        if (! empty($missionLocales)) {
             foreach ($missionLocales as $locale) {
                 $translation = Translation::create([
                     'locale' => $locale,
-                    'group'  => $translations->first()->group,
-                    'key'    => $translations->first()->key,
-                    'value'  => '',
+                    'group' => $translations->first()->group,
+                    'key' => $translations->first()->key,
+                    'value' => '',
                 ]);
                 $translations->push($translation);
             }
@@ -71,7 +71,7 @@ class TranslationController extends Controller
         $groups = collect($translations)->pluck('group')->unique()->toArray();
 
         foreach ($translations as $translation) {
-            if (is_array($translation['translations']) && !empty($translation['translations'])) {
+            if (is_array($translation['translations']) && ! empty($translation['translations'])) {
                 foreach ($translation['translations'] as $locale => $value) {
                     $key = preg_replace("/{$translation['group']}\\./", '', $translation['key'], 1);
 
@@ -84,8 +84,8 @@ class TranslationController extends Controller
                         $result = new Translation();
                         $result->fill([
                             'locale' => $locale,
-                            'group'  => $translation['group'],
-                            'key'    => $key,
+                            'group' => $translation['group'],
+                            'key' => $key,
                         ]);
                     }
 
@@ -110,7 +110,7 @@ class TranslationController extends Controller
                 $translations[] =
                     [
                         'html' => view('translation-organizer::partials.translation-row', compact('translation'))->render(),
-                        'id'   => $translation['id'],
+                        'id' => $translation['id'],
                     ];
             }
 
@@ -125,6 +125,7 @@ class TranslationController extends Controller
         $config = config();
         $driver = $config->get('translation-organizer.storage.driver', 'file');
         cache()->driver($driver)->set('TRANSLATION_ON_PAGE', $request->value == 'enable' ? true : null);
+
         return response()->json(['data' => [], 'status' => true]);
     }
 }
