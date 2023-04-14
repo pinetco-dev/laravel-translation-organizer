@@ -6,6 +6,7 @@ use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\Facades\Route;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\CacheClearCommand;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\ExportCommand;
+use Pinetcodev\LaravelTranslationOrganizer\Commands\FindCommand;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\ImportCommand;
 use Pinetcodev\LaravelTranslationOrganizer\Commands\PublishCommand;
 /*use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\Modals\CreateSourceKey;
@@ -39,6 +40,7 @@ class LaravelTranslationOrganizerServiceProvider extends PackageServiceProvider
                 PublishCommand::class,
                 ExportCommand::class,
                 CacheClearCommand::class,
+                FindCommand::class
             ]);
     }
 
