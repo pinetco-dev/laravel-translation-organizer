@@ -1,5 +1,5 @@
 <tr class="divide-x divide-gray-300 focus:bg-gray-400"
-    id="{{$translation['id']}}" translate
+    id="translation-{{$translation['id']}}" translate
     data-key="{{$translation['key']}}"
     data-group="{{$translation['group']}}">
     <td class="relative py-2 pl-4 pr-4 text-black group" width="30%">

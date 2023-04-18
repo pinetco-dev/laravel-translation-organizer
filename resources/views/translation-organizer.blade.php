@@ -162,7 +162,7 @@
                             element.focus();
                             element.setAttribute('tabindex', "0");
                             element.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
-                        }, 1000);
+                        }, 500);
                     }
                 });
             }
