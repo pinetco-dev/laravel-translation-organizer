@@ -635,7 +635,7 @@ class Manager
     protected function storeData()
     {
         $config = $this->app['config'];
-        if ($config->get('translation-organizer.storage.enabled')) {
+        if ($config->get('translation-organizer.enabled')) {
             $driver = $config->get('translation-organizer.storage.driver', 'file');
             cache()->driver($driver)->set($this->requestId, $this->data);
         }
