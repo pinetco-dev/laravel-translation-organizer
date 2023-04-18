@@ -1,3 +1,4 @@
+
 #laravel-translation-organizer-modal {
 
 /*! tailwindcss v3.3.1 | MIT License | https://tailwindcss.com*/
@@ -609,12 +610,6 @@ select {
     justify-content: space-between
 }
 
-.divide-x > :not([hidden]) ~ :not([hidden]) {
-    --tw-divide-x-reverse: 0;
-    border-left-width: calc(1px * (1 - var(--tw-divide-x-reverse)));
-    border-right-width: calc(1px * var(--tw-divide-x-reverse))
-}
-
 .divide-y > :not([hidden]) ~ :not([hidden]) {
     --tw-divide-y-reverse: 0;
     border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
@@ -674,16 +669,8 @@ select {
     padding-left: 2.5rem
 }
 
-.pl-4 {
-    padding-left: 1rem
-}
-
 .pr-2 {
     padding-right: .5rem
-}
-
-.pr-4 {
-    padding-right: 1rem
 }
 
 .pt-4 {
@@ -705,11 +692,6 @@ select {
 
 .font-semibold {
     font-weight: 600
-}
-
-.text-black {
-    --tw-text-opacity: 1;
-    color: rgb(0 0 0/var(--tw-text-opacity))
 }
 
 .antialiased {
