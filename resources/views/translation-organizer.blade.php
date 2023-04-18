@@ -96,7 +96,7 @@
                                     Save
                                 </button>
                             </div>
-                            <div class="relative mt-6 flex-1 px-4 sm:px-6 overflow-y-scroll">
+                            <div class="relative mt-6 flex-1 px-4 sm:px-6 overflow-y-scroll" style="overflow-y: auto">
                                 <!-- Replace with your content -->
                                 <div class="shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                                     <table class="min-w-full font-semibold divide-y divide-gray-100">
