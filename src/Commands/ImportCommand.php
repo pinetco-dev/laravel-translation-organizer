@@ -37,13 +37,14 @@ class ImportCommand extends Command
     public function handle(): int
     {
         if (config('translation-organizer.enabled')) {
-            $this->error("Disable TRANSLATION_ENABLED before importing");
+            $this->error('Disable TRANSLATION_ENABLED before importing');
+
             return self::INVALID;
         }
 
         $replace = $this->option('replace');
         $counter = $this->manager->importTranslations($replace);
-        $this->info('Done importing, processed ' . $counter . ' items!');
+        $this->info('Done importing, processed '.$counter.' items!');
 
         return self::SUCCESS;
     }
