@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name') }}</title>
-    <link rel="stylesheet" href="{{ asset('vendor/translation-organizer/translation.css') }}">
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased" id="translationBody">
 <div class="min-h-full" id="laravel-translation-organizer-modal">
     {{ $slot }}
 </div>
