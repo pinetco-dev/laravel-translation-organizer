@@ -22,14 +22,5 @@ class PublishCommand extends Command
             '--force' => true,
         ]);
 
-        $this->call('vendor:publish', [
-            '--tag' => 'translation-organizer-assets',
-            '--force' => true,
-        ]);
-
-        $this->call('vendor:publish', [
-            '--tag' => 'translation-organizer-views',
-            '--force' => true,
-        ]);
     }
 }
