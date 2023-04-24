@@ -432,7 +432,8 @@
                 for (var j = 0; j < langs.length; j++) {
                     const newTranslations = elements[i].querySelectorAll('[data-locale]');
                     for (var k = 0; k < newTranslations.length; k++) {
-                        translation["translations"][newTranslations[k].dataset.locale] = newTranslations[k].innerHTML.trim();
+                        translation["translations"][newTranslations[k].dataset.locale] =
+                            newTranslations[k].textContent.replace(/&amp;/g, "&").trim();
                     }
                 }
                 collections.push(translation);
