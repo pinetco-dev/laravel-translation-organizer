@@ -46,5 +46,4 @@ class TranslationServiceProvider extends BaseTranslationServiceProvider
             return $trans;
         });
     }
-
 }
