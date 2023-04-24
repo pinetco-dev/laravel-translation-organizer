@@ -63,6 +63,22 @@
             left: -40px;
         }
 
+        #laravel-translation-organizer-modal .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        #laravel-translation-organizer-modal .hidden {
+            display: none;
+        }
+
         #laravel-translation-organizer-modal .translation-close-btn button {
             padding: 0.25rem;
             background: rgb(230 232 234);
@@ -406,6 +422,7 @@
 
         function save() {
             startLoader();
+            return 1;
             var elements = document.querySelectorAll('[translate]');
             var collections = [];
             for (var i = 0; i < elements.length; i++) {
@@ -442,8 +459,9 @@
 
 
         function startLoader() {
-            document.getElementById('translation-submit').setAttribute("disabled", 1);
             document.getElementById('translation-submit-loader').classList.remove("hidden");
+            document.getElementById('translation-submit').setAttribute("disabled", 1);
+
         }
 
         function endLoader() {
