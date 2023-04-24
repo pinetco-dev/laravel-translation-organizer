@@ -51,7 +51,7 @@ class LaravelTranslationOrganizerServiceProvider extends PackageServiceProvider
             $this->app[Kernel::class]
                 ->pushMiddleware(InjectTranslationOrganizer::class);
             $this->app[Kernel::class]
-                ->appendMiddlewareToGroup('web',InjectTranslationOrganizer::class);
+                ->appendMiddlewareToGroup('web', InjectTranslationOrganizer::class);
             $this->registerLivewireComponents();
             $this->registerRoutes();
         }

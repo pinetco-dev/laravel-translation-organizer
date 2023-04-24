@@ -125,13 +125,16 @@ class TranslationController extends Controller
         $config = config();
         $driver = $config->get('translation-organizer.session.driver', 'file');
         session()->driver($driver)->put('TRANSLATION_ON_PAGE', $request->value == 'enable' ? true : null);
+
         return response()->json(['data' => [], 'status' => true]);
     }
 
-    public function toggleEnable(Request $request){
+    public function toggleEnable(Request $request)
+    {
         $config = config();
         $driver = $config->get('translation-organizer.session.driver', 'file');
         session()->driver($driver)->put('TRANSLATION_ENABLED', $request->value == 'enable' ? true : null);
+
         return response()->json(['data' => [], 'status' => true]);
     }
 }

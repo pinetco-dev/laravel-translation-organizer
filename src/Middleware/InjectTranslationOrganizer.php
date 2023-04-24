@@ -40,8 +40,6 @@ class InjectTranslationOrganizer
             app()->register(TranslationServiceProvider::class);
         }
 
-
-
         // check if translation is not enable
         try {
             $response = $next($request);
