@@ -8,6 +8,7 @@ use Illuminate\Container\Container;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Http\Request;
 use Pinetcodev\LaravelTranslationOrganizer\Services\Manager;
+use Pinetcodev\LaravelTranslationOrganizer\TranslationServiceProvider;
 use Throwable;
 
 class InjectTranslationOrganizer
@@ -35,9 +36,11 @@ class InjectTranslationOrganizer
     {
         // here check if translation inject is enable.
 
-        if (! $this->manager->isEnable()) {
-            return $next($request);
+        if ($this->manager->isEnable()) {
+            app()->register(TranslationServiceProvider::class);
         }
+
+
 
         // check if translation is not enable
         try {

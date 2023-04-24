@@ -50,9 +50,10 @@ class LaravelTranslationOrganizerServiceProvider extends PackageServiceProvider
         if (config('translation-organizer.enabled')) {
             $this->app[Kernel::class]
                 ->pushMiddleware(InjectTranslationOrganizer::class);
+            $this->app[Kernel::class]
+                ->appendMiddlewareToGroup('web',InjectTranslationOrganizer::class);
             $this->registerLivewireComponents();
             $this->registerRoutes();
-            $this->app->register(TranslationServiceProvider::class);
         }
     }
 
@@ -69,7 +70,6 @@ class LaravelTranslationOrganizerServiceProvider extends PackageServiceProvider
     protected function registerRoutes()
     {
         Route::group([
-            'domain' => config('translation-organizer.domain', null),
             'prefix' => config('translation-organizer.path'),
             'namespace' => 'Pinetcodev\LaravelTranslationOrganizer\Http\Controllers',
             'middleware' => config('translation-organizer.middleware', 'web'),

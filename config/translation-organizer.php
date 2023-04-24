@@ -15,11 +15,6 @@ return [
     'enabled' => env('TRANSLATION_ENABLED', false),
     'enabled_on_page' => env('TRANSLATION_ON_PAGE', false),
     'highlight-color' => 'aqua',
-    'route' => [
-        'prefix' => 'translations',
-        'middleware' => 'auth',
-    ],
-
     'langs' => ['en' => 'English', 'de' => 'German'],
 
     /*
@@ -57,9 +52,9 @@ return [
     'middleware' => ['web'],
 
     /**
-     * Enable deletion of translations
+     * Enable deletion of translations.
      *
-     * @type bool
+     * @var bool
      */
     'delete_enabled' => true,
 
@@ -67,7 +62,7 @@ return [
      * Exclude specific groups from Laravel Translation Manager.
      * This is useful if, for example, you want to avoid editing the official Laravel language files.
      *
-     * @type array
+     * @var array
      *
      *    array(
      *        'pagination',
@@ -80,7 +75,7 @@ return [
     /**
      * Exclude specific languages from Laravel Translation Manager.
      *
-     * @type array
+     * @var array
      *
      *    array(
      *        'fr',
@@ -112,5 +107,6 @@ return [
      */
     'db_connection' => env('TRANSLATION_ORGANIZER_DB_CONNECTION', null),
     'storage.driver' => env('TRANSLATION_ORGANIZER_STORAGE', 'file'),
+    'session.driver' => env('TRANSLATION_ORGANIZER_SESSION', 'file'),
     'capture_ajax' => false,
 ];

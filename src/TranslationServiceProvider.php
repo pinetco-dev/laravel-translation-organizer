@@ -15,40 +15,36 @@ class TranslationServiceProvider extends BaseTranslationServiceProvider
      */
     public function register()
     {
-        $config = config();
-        $driver = $config->get('translation-organizer.storage.driver', 'file');
-        $translationOnPage = cache()->driver($driver)->get('TRANSLATION_ON_PAGE');
-        $config->set('translation-organizer.enabled_on_page', $translationOnPage ? true : false);
-        if (config('translation-organizer.enabled')) {
-            $this->app->singleton('translation-organizer', function ($app) {
-                $manager = $app->make('Pinetcodev\LaravelTranslationOrganizer\Services\Manager');
 
-                return $manager;
-            });
+        $this->app->singleton('translation-organizer', function ($app) {
+            $manager = $app->make('Pinetcodev\LaravelTranslationOrganizer\Services\Manager');
 
-            $this->app->singleton('translation.loader', function ($app) {
-                return new TranslationLoader($app['files'], $app['path.lang']);
-            });
+            return $manager;
+        });
 
-            // $this->registerLoader();
-            $this->app->singleton('translator', function ($app) {
-                $loader = $app['translation.loader'];
+        $this->app->singleton('translation.loader', function ($app) {
+            return new TranslationLoader($app['files'], $app['path.lang']);
+        });
 
-                // When registering the translator component, we'll need to set the default
-                // locale as well as the fallback locale. So, we'll grab the application
-                // configuration so we can easily get both of these values from there.
-                $locale = $app['config']['app.locale'];
+        // $this->registerLoader();
+        $this->app->singleton('translator', function ($app) {
+            $loader = $app['translation.loader'];
 
-                $trans = new Translator($loader, $locale);
+            // When registering the translator component, we'll need to set the default
+            // locale as well as the fallback locale. So, we'll grab the application
+            // configuration so we can easily get both of these values from there.
+            $locale = $app['config']['app.locale'];
 
-                $trans->setFallback($app['config']['app.fallback_locale']);
+            $trans = new Translator($loader, $locale);
 
-                if ($app->bound('translation-organizer')) {
-                    $trans->setTranslationManager($app['translation-organizer']);
-                }
+            $trans->setFallback($app['config']['app.fallback_locale']);
 
-                return $trans;
-            });
-        }
+            if ($app->bound('translation-organizer')) {
+                $trans->setTranslationManager($app['translation-organizer']);
+            }
+
+            return $trans;
+        });
     }
+
 }
