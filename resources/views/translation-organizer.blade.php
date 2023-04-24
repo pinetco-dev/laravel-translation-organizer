@@ -422,7 +422,6 @@
 
         function save() {
             startLoader();
-            return 1;
             var elements = document.querySelectorAll('[translate]');
             var collections = [];
             for (var i = 0; i < elements.length; i++) {
