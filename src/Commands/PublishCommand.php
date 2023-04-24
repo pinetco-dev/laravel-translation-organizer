@@ -18,7 +18,7 @@ class PublishCommand extends Command
         ]);
 
         $this->call('vendor:publish', [
-            '--tag' => 'translation-organizer-migration',
+            '--tag' => 'translation-organizer-migrations',
             '--force' => true,
         ]);
 
