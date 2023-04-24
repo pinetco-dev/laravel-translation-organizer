@@ -386,7 +386,7 @@
         function listenTranslationPaste() {
             const translationLocales = document.querySelectorAll('[data-locale]');
             var translations = document.getElementsByTagName("translation");
-            for (var i = 0; i < translations.length; i++) {
+            for (var i = 0; i < translationLocales.length; i++) {
                 translationLocales[i].addEventListener("paste", function (e) {
                     e.preventDefault();
 
