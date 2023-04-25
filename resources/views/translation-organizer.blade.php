@@ -306,7 +306,7 @@
         var toggleTranslationOnPageURL = @json(route("translation_organizer.toggle"));
         var toggleTranslationURL = @json(route("translation_organizer.toggle-enable"));
         var translationFetch = url;
-        var isOnPageTranslationEnable =  @json(session("TRANSLATION_ON_PAGE"));
+        var isOnPageTranslationEnable =  @json($isPageTranslationEnable);
         var csrf = @json(csrf_token());
         var headerName = "laravel-translation-organizer-id";
         var body = document.getElementById("translationBody");
