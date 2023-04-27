@@ -498,9 +498,7 @@ class Manager
             return $response;
         } elseif ($this->isJsonRequest($request)) {
             $content = $response->getContent();
-            $content = preg_replace('/&lt;/', '<', $content);
-            $content = preg_replace('/&gt;/', '>', $content);
-            $response->setContent($content);
+            $response->setContent($this->parseTags($content));
 
             return $response;
         } elseif (
@@ -517,10 +515,7 @@ class Manager
                     $response->headers->set('laravel-translation-organizer-id', $this->requestId);
                 }
                 $content = $response->getContent();
-                $content = preg_replace('/&lt;/', '<', $content);
-                $content = preg_replace('/&gt;/', '>', $content);
-                $response->setContent($content);
-
+                $response->setContent($this->parseTags($content));
                 return $response;
             } catch (\Exception $e) {
                 // catch the errors
@@ -564,15 +559,14 @@ class Manager
             $original = $response->getOriginalContent();
         }
 
-        $content = preg_replace('/&lt;/', '<', $content);
-        $content = preg_replace('/&gt;/', '>', $content);
+
         //     $content = preg_replace('/&lt;translation/', "<translation", $content);
         //    $content = preg_replace("/&lt;[\/]{1}translation&gt;[ ]{0,}[\n]{0,}/", "</translation>", $content);
         //  $content = preg_replace('/"[ ]{0,}[\n]{0,}<translation/', "<translation", $content);
         //  $content = preg_replace('/<\/translation>[ ]{0,}[\n]{0,}"/', "</translation>", $content);
 
         // Update the new content and reset the content length
-        $response->setContent($content);
+        $response->setContent($this->parseTags($content));
         $response->headers->remove('Content-Length');
 
         // Restore original response (eg. the View or Ajax data)
@@ -652,5 +646,13 @@ class Manager
         $driver = $config->get('translation-organizer.storage.driver', 'file');
         cache()->driver($driver)->set($this->requestId, $this->data);
 //        }
+    }
+
+    public function parseTags($content){
+        $content = preg_replace('/&lt;/', '<', $content);
+        $content = preg_replace('/&gt;/', '>', $content);
+        $content = preg_replace('/&amp;lt;/', '<', $content);
+        return preg_replace('/&amp;gt;/', '>', $content);
+
     }
 }
