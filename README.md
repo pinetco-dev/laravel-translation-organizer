@@ -71,7 +71,7 @@ php artisan translation-organizer:import
 
 ## Export translations
 ```bash
-php artisan translation-organizer:export
+php artisan translation-organizer:export --all
 ```
 
 ## Testing
