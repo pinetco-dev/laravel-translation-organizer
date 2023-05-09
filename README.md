@@ -37,27 +37,20 @@ composer require pinetco-dev/laravel-translation-organizer
 ## You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-translation-organizer-migrations"
+php artisan vendor:publish --tag="translation-organizer-migrations"
 php artisan migrate
 ```
 
 ## You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-translation-organizer-config"
-```
-
-## This is the contents of the published config file:
-
-```php
-return [
-];
+php artisan vendor:publish --tag="translation-organizer-config"
 ```
 
 ## Optionally, you can publish the views using
 
 ```bash
-php artisan vendor:publish --tag="laravel-translation-organizer-views"
+php artisan vendor:publish --tag="translation-organizer-views"
 ```
 
 ## Import translations to db
