@@ -516,6 +516,7 @@ class Manager
                 }
                 $content = $response->getContent();
                 $response->setContent($this->parseTags($content));
+
                 return $response;
             } catch (\Exception $e) {
                 // catch the errors
@@ -558,7 +559,6 @@ class Manager
         if ($response instanceof \Illuminate\Http\Response && $response->getOriginalContent()) {
             $original = $response->getOriginalContent();
         }
-
 
         //     $content = preg_replace('/&lt;translation/', "<translation", $content);
         //    $content = preg_replace("/&lt;[\/]{1}translation&gt;[ ]{0,}[\n]{0,}/", "</translation>", $content);
@@ -648,10 +648,12 @@ class Manager
         //        }
     }
 
-    public function parseTags($content){
+    public function parseTags($content)
+    {
         $content = preg_replace('/&lt;/', '<', $content);
         $content = preg_replace('/&gt;/', '>', $content);
         $content = preg_replace('/&amp;lt;/', '<', $content);
+
         return preg_replace('/&amp;gt;/', '>', $content);
 
     }
