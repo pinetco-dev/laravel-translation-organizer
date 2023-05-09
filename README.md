@@ -17,43 +17,68 @@ We highly appreciate you sending us a postcard from your hometown, mentioning wh
 
 ## Installation
 
-You can install the package via composer:
+## Add following in composer.json
+```bash
+ "repositories" : [
+        {
+            "type": "vcs",
+            "url": "https://github.com/pinetco-dev/laravel-translation-organizer.git"
+        }
+    ]
+```
+
+
+## You can install the package via composer:
 
 ```bash
 composer require pinetco-dev/laravel-translation-organizer
 ```
 
-You can publish and run the migrations with:
+## You can publish and run the migrations with:
 
 ```bash
 php artisan vendor:publish --tag="laravel-translation-organizer-migrations"
 php artisan migrate
 ```
 
-You can publish the config file with:
+## You can publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="laravel-translation-organizer-config"
 ```
 
-This is the contents of the published config file:
+## This is the contents of the published config file:
 
 ```php
 return [
 ];
 ```
 
-Optionally, you can publish the views using
+## Optionally, you can publish the views using
 
 ```bash
 php artisan vendor:publish --tag="laravel-translation-organizer-views"
 ```
 
-## Usage
+## Import translations to db
+
+```bash
+php artisan translation-organizer:import
+```
+
+## Enable translation from  .env
 
 ```php
-$laravelTranslationOrganizer = new Pinetcodev\LaravelTranslationOrganizer();
-echo $laravelTranslationOrganizer->echoPhrase('Hello, Pinetcodev!');
+TRANSLATION_ENABLED=true
+```
+
+```bash
+php artisan translation-organizer:import
+```
+
+## Export translations
+```bash
+php artisan translation-organizer:export
 ```
 
 ## Testing
