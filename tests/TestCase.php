@@ -3,14 +3,14 @@
 namespace Pinetcodev\LaravelTranslationOrganizer\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
 use Livewire\Livewire;
 use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\Modals\CreateSourceKey;
 use Pinetcodev\LaravelTranslationOrganizer\Http\Livewire\Widgets\ExportTranslations;
-use Tests\TestCase as UnitTestCase;
 use Pinetcodev\LaravelTranslationOrganizer\LaravelTranslationOrganizerServiceProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase as UnitTestCase;
 
 class TestCase extends UnitTestCase
 {
@@ -52,7 +52,7 @@ class TestCase extends UnitTestCase
             ->call('create');
 
         $this->assertDatabaseHas('lto-translation', [
-            'key' => 'random text'
+            'key' => 'random text',
         ]);
     }
 
@@ -67,13 +67,13 @@ class TestCase extends UnitTestCase
 
         $availableLanguages = config('translation-organizer.langs');
 
-        foreach($availableLanguages as $languageKey => $language) {
-            $jsonFilePath = 'lang/'. $languageKey .'.json';
+        foreach ($availableLanguages as $languageKey => $language) {
+            $jsonFilePath = 'lang/'.$languageKey.'.json';
 
             $this->assertTrue(File::exists($jsonFilePath));
 
             $jsonFileData = File::get($jsonFilePath);
-            $jsonData     = json_decode($jsonFileData, true);
+            $jsonData = json_decode($jsonFileData, true);
 
             $this->assertArrayHasKey('random text', $jsonData);
         }
@@ -92,11 +92,11 @@ class TestCase extends UnitTestCase
 
         $availableLanguages = config('translation-organizer.langs');
 
-        foreach($availableLanguages as $languageKey => $language) {
-            $jsonFilePath = 'lang/'. $languageKey .'/'. $file .'.php';
+        foreach ($availableLanguages as $languageKey => $language) {
+            $jsonFilePath = 'lang/'.$languageKey.'/'.$file.'.php';
 
             $this->assertTrue(File::exists($jsonFilePath));
-            $this->assertTrue(Lang::has($file . '.random text'));
+            $this->assertTrue(Lang::has($file.'.random text'));
         }
     }
 
@@ -106,8 +106,8 @@ class TestCase extends UnitTestCase
 
         $this->assertDatabaseHas('lto-translation', [
             'group' => 'auth',
-            'key'   => 'failed',
-            'value' => 'These credentials do not match our records.'
+            'key' => 'failed',
+            'value' => 'These credentials do not match our records.',
         ]);
     }
 }

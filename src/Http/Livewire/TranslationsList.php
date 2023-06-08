@@ -12,19 +12,22 @@ use Pinetcodev\LaravelTranslationOrganizer\Models\Translation;
 class TranslationsList extends Component
 {
     use withPagination;
+
     public $isOpen = false;
 
     public $search;
+
     public $fileGroup;
+
     public $availableFileGroups;
 
     protected $listeners = [
         'translationCreated' => '$refresh',
-        'closeModel' => 'closeModel'
+        'closeModel' => 'closeModel',
     ];
 
     protected $queryString = [
-        'search', 'fileGroup'
+        'search', 'fileGroup',
     ];
 
     public function mount()
@@ -50,10 +53,10 @@ class TranslationsList extends Component
                     ->orWhere('value', 'like', "%$this->search%");
             });
         })
-        ->when($this->fileGroup, function ($query) {
-            $query->where('group', 'like', "%$this->fileGroup%");
-        })
-        ->groupBy('key')->paginate(12)->onEachSide(0);
+            ->when($this->fileGroup, function ($query) {
+                $query->where('group', 'like', "%$this->fileGroup%");
+            })
+            ->groupBy('key')->paginate(12)->onEachSide(0);
     }
 
     public function confirmDelete(Translation $translation)
