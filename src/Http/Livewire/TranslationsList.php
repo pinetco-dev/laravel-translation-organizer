@@ -8,29 +8,52 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Pinetcodev\LaravelTranslationOrganizer\Models\Translation;
-use WireUi\Traits\Actions;
 
 class TranslationsList extends Component
 {
-    use Actions;
     use withPagination;
+    public $isOpen = false;
 
     public $search;
+    public $fileGroup;
+    public $availableFileGroups;
 
     protected $listeners = [
         'translationCreated' => '$refresh',
+        'closeModel' => 'closeModel'
     ];
+
+    protected $queryString = [
+        'search', 'fileGroup'
+    ];
+
+    public function mount()
+    {
+        $this->availableFileGroups = Translation::groupBy('group')->pluck('group')->toArray();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSearchFileGroup()
+    {
+        $this->resetPage();
+    }
 
     public function getTranslations(): LengthAwarePaginator
     {
-        $search = $this->search;
-
         return Translation::when($this->search, function ($query) {
-            $query->where('key', 'like', "%$this->search%")
-                ->orWhere('group', 'like', "%$this->search%")
-                ->orWhere('value', 'like', "%$this->search%");
-        })->groupBy('key')
-            ->paginate(12)->onEachSide(0);
+            $query->where(function ($query) {
+                $query->where('key', 'like', "%$this->search%")
+                    ->orWhere('value', 'like', "%$this->search%");
+            });
+        })
+        ->when($this->fileGroup, function ($query) {
+            $query->where('group', 'like', "%$this->fileGroup%");
+        })
+        ->groupBy('key')->paginate(12)->onEachSide(0);
     }
 
     public function confirmDelete(Translation $translation)
@@ -53,6 +76,11 @@ class TranslationsList extends Component
                 ->where('group', $translation->group)->delete();
             $this->notification()->success('Translation deleted successfully!');
         });
+    }
+
+    public function closeModel()
+    {
+        $this->isOpen = false;
     }
 
     public function render(): View

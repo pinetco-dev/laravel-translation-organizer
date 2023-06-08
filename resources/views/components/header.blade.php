@@ -11,7 +11,7 @@
                     </a>
                 </div>
 
-                @livewire('translations-ui::export-translations')
+                @livewire('translations-organizer::export-translations')
             </div>
         </div>
     </nav>

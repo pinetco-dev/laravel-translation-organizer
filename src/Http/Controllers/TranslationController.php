@@ -21,12 +21,12 @@ class TranslationController extends Controller
         ]);
     }
 
-    public function phrases(Translation $translation)
-    {
-        return view('translation-organizer::phrases', [
-            'translation' => $translation,
-        ]);
-    }
+//    public function phrases(Translation $translation)
+//    {
+//        return view('translation-organizer::phrases', [
+//            'translation' => $translation,
+//        ]);
+//    }
 
     public function phrase(Translation $translation)
     {
