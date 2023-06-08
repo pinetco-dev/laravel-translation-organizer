@@ -9,7 +9,8 @@ module.exports = {
         './resources/views/components/layouts/modal.blade.php',
         './resources/views/translation-organizer.blade.php',
         './resources/views/index.blade.php',
-        './resources/views/components/layouts/app.blade.php'
+        './resources/views/components/layouts/app.blade.php',
+        './resources/views/**/*.blade.php'
     ],
     theme: {
         extend: {
