@@ -4,11 +4,17 @@
             <div
                 class="text-sm font-semibold text-gray-800">{{ config("translation-organizer.langs")[$translation->locale] }}</div>
             <div class="text-xs text-gray-500 border rounded-md px-1.5 py-0.5">{{ $translation->locale }}</div>
+            @if(!$translation->value)
+                <div class="text-sm font-semibold text-yellow-600">
+                    <x-translation-organizer::icons.warning class="w-5 h-5"/>
+                </div>
+            @endif
         </div>
     </div>
     <div class="w-full p-3">
         <textarea id="textArea" dir="auto" wire:model="translation.value"
                   class="w-full min-h-36 without-ring resize-none border-0 m-0 p-0"></textarea>
+        @error('translation.value') <span class="text-red-500"> {{ $message }} </span> @enderror
     </div>
     <div class="w-full grid grid-cols-2 border-t gap-6 px-4 py-3">
         <a href="{{ route('translation_organizer.index') }}"

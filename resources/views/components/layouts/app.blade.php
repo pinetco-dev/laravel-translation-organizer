@@ -11,9 +11,8 @@
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
         <!-- Scripts -->
-        <wireui:scripts />
         <script src="{{ asset('vendor/translation-organizer/app.js') }}" defer></script>
-        <link rel="stylesheet" href="{{ asset('vendor/translation-organizer/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('vendor/translation-organizer/translation.css') }}">
         <livewire:styles />
     </head>
     <body class="font-sans antialiased">
@@ -28,9 +27,9 @@
         </div>
 
         <livewire:scripts />
-        @livewire('livewire-ui-modal')
-        <x-notifications z-index="z-50" />
-        <x-dialog z-index="z-50" blur="md" align="center" />
+{{--        @livewire('livewire-ui-modal')--}}
+{{--        <x-notifications z-index="z-50" />--}}
+{{--        <x-dialog z-index="z-50" blur="md" align="center" />--}}
 
         @stack('scripts')
     </body>

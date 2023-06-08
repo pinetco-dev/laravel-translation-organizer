@@ -1,6 +1,6 @@
 <x-translation-organizer::layouts.app>
     @if($languages_installed > 1)
-        @livewire('translations-ui::translations-list')
+        @livewire('translations-organizer::translations-list')
     @else
         <div class="w-full bg-white rounded-md shadow flex min-h-36 py-12 px-6">
             <div class="w-full flex flex-col items-center justify-center">

@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="w-full p-3">
-        @livewire('translations-ui::source-phrase', ['phrase' => $phrase])
+        @livewire('translations-organizer::source-phrase', ['phrase' => $phrase])
     </div>
     <div class="w-full p-3 grid grid-cols-2 gap-6">
         <div class="w-full border py-2 px-4 flex items-center rounded-md space-x-2 bg-gray-50">

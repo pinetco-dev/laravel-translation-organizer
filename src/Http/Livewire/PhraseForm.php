@@ -5,12 +5,9 @@ namespace Pinetcodev\LaravelTranslationOrganizer\Http\Livewire;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Pinetcodev\LaravelTranslationOrganizer\Models\Translation;
-use WireUi\Traits\Actions;
 
 class PhraseForm extends Component
 {
-    use Actions;
-
     public Translation $translation;
 
     public function mount(Translation $translation)
@@ -39,8 +36,6 @@ class PhraseForm extends Component
         $this->validate();
 
         $this->translation->save();
-
-        $this->notification()->success('Translation updated successfully!');
 
         cache()->forget(sprintf('locale.organizer.%s.%s',
             $this->translation->locale, $this->translation->group));
