@@ -36,7 +36,7 @@ class CreateSourceKey extends Component
     {
         return [
             'key' => [
-                'required', new CheckKeyName($this->file),
+                'required'/*, new CheckKeyName($this->file)*/,
             ],
         ];
     }
