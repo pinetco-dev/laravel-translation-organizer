@@ -18,11 +18,11 @@
     </div>
     <div class="w-full grid grid-cols-2 border-t gap-6 px-4 py-3">
         <a href="{{ route('translation_organizer.index') }}"
-           class="text-sm font-medium text-center w-full border border-violet-400 text-violet-700 hover:bg-violet-50 py-3 rounded-md uppercase">
+           class="text-sm font-medium text-center w-full border border-blue-400 text-blue-700 hover:bg-blue-50 py-3 rounded-md uppercase">
             Cancel
         </a>
         <button wire:click="save"
-                class="text-sm font-medium w-full bg-violet-700 hover:bg-violet-500 text-white py-3 rounded-md uppercase">
+                class="text-sm font-medium w-full bg-blue-700 hover:bg-blue-500 text-white py-3 rounded-md uppercase">
             Save Changes
         </button>
     </div>

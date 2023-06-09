@@ -2,7 +2,7 @@
     @if(! blank($phrase->parameters))
         @foreach(explode(' ', $phrase->value) as $word)
             @if(preg_match('/(?<!\w):(\w+)/', $word))
-                <span onclick="copyParameters('textArea', '{{ preg_replace('/[^a-zA-Z0-9:]/', ' ', $word) }}')" class="text-violet-700 font-medium cursor-pointer">{{ $word }}</span>
+                <span onclick="copyParameters('textArea', '{{ preg_replace('/[^a-zA-Z0-9:]/', ' ', $word) }}')" class="text-blue-700 font-medium cursor-pointer">{{ $word }}</span>
             @else
                 <span class="text-gray-600 font-normal">{{ $word }}</span>
             @endif

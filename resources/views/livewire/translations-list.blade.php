@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <button wire:click="$set('isOpen', true)" class="flex items-center justify-center px-4 py-2 border border-white rounded-md bg-violet-600 hover:bg-violet-500 w-full max-w-40 disabled:cursor-not-allowed">
+        <button wire:click="$set('isOpen', true)" class="flex items-center justify-center px-4 py-2 border border-white rounded-md bg-blue-600 hover:bg-blue-500 w-full max-w-40 disabled:cursor-not-allowed">
             <span class="text-white font-medium"> Add new translation </span>
         </button>
         @if($isOpen)
@@ -69,7 +69,7 @@
                                         <div
                                             class="w-10  pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 flex flex-row">
                                             <a href="{{ route('translation_organizer.show', $translation) }}"
-                                               class="text-gray-400 hover:text-violet-700 ml-auto relative z-50"
+                                               class="text-gray-400 hover:text-blue-700 ml-auto relative z-50"
                                                title="Edit key"
                                             >
                                                 <x-translation-organizer::icons.translate class="w-5 h-5"/>

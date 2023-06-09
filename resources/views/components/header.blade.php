@@ -1,7 +1,7 @@
-<div class="bg-violet-700 pb-48">
-    <nav x-data="{ open: false }" class="border-b border-violet-300 border-opacity-25 bg-violet-700 lg:border-none">
+<div class="bg-blue-700 pb-48">
+    <nav x-data="{ open: false }" class="border-b border-blue-300 border-opacity-25 bg-blue-700 lg:border-none">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="relative flex h-16 items-center justify-between lg:border-b lg:border-violet-400 lg:border-opacity-25">
+            <div class="relative flex h-16 items-center justify-between lg:border-b lg:border-blue-400 lg:border-opacity-25">
                 <div class="flex items-center px-2 lg:px-0">
                     <a href="{{ route('translation_organizer.index') }}" class="flex-shrink-0 flex items-center gap-3">
                         <svg class="h-8 w-8 text-white" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -10,8 +10,6 @@
                         <span class="font-medium text-white">Laravel Translations UI</span>
                     </a>
                 </div>
-
-                @livewire('translations-organizer::export-translations')
             </div>
         </div>
     </nav>

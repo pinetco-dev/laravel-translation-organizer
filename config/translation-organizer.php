@@ -51,6 +51,8 @@ return [
 
     'middleware' => ['web'],
 
+    'middleware_admin' => ['web'],
+
     /**
      * Enable deletion of translations.
      *

@@ -1,4 +1,4 @@
-<button wire:click="export" wire:loading.attr="disabled"  class="flex items-center justify-center px-4 py-2 border border-white rounded-md bg-violet-600 hover:bg-violet-500 w-full max-w-40 disabled:cursor-not-allowed">
+<button wire:click="export" wire:loading.attr="disabled"  class="flex items-center justify-center px-4 py-2 border border-white rounded-md bg-blue-600 hover:bg-blue-500 w-full max-w-40 disabled:cursor-not-allowed">
     <div wire:loading.remove wire:target="export" class="flex gap-4">
         <span class="text-white font-medium">Publish</span>
         <svg class="h-6 w-6 text-white" clip-rule="evenodd" fill="currentColor" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

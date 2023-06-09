@@ -2,15 +2,11 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    // presets: [
-    //     require('./vendor/wireui/wireui/tailwind.config.js')
-    // ],
     content: [
-        './resources/views/components/layouts/modal.blade.php',
-        './resources/views/translation-organizer.blade.php',
-        './resources/views/index.blade.php',
-        './resources/views/components/layouts/app.blade.php',
-        './resources/views/**/*.blade.php'
+        './resources/views/**/*.blade.php',
+        './resources/views/*.blade.php',
+        './resources/views/**/**/*.blade.php',
+        './resources/views/**/**/**/*.blade.php',
     ],
     theme: {
         extend: {
@@ -31,9 +27,40 @@ module.exports = {
             transparent: 'transparent',
             white: '#ffffff',
             black: '#000000',
-            'primary': '#6EBAE7',
-            'primary-dark': '#538CAD',
+            'primary': '#119CED',
+            'primary-dark': '#005183',
             'primary-light': '#F3F8FC',
+            'gray': {
+                100: '#F5F5F5',
+                300: '#E6E8EA',
+                400: '#9ca3af',
+                500: '#6b7280',
+                700: '#4b5563',
+                900: '#111827',
+            },
+            'red': {
+                300: '#FEE6E6',
+                500: '#D44B4B',
+                700: '#C60707',
+            },
+            'green': {
+                300: '#E9F9F0',
+                500: '#27AE60',
+                700: '#1A944B',
+            },
+            'blue': {
+                300: '#EBF0FD',
+                500: '#3669EE',
+                700: '#2B54BE',
+            },
+            'yellow': {
+                300: '#FDF9EB',
+                500: '#EEC637',
+                700: '#BE9E2C',
+            },
+            'orange': {
+                500: '#E9910B',
+            },
         },
     },
 
