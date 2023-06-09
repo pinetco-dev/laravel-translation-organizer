@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Pinetcodev\LaravelTranslationOrganizer\Http\Controllers\TranslationController;
 
-
 Route::middleware(config('translation-organizer.middleware_admin'))->group(function () {
     Route::get('/', [TranslationController::class, 'index'])->name('translation_organizer.index');
 

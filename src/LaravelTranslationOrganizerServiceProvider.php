@@ -69,10 +69,10 @@ class LaravelTranslationOrganizerServiceProvider extends PackageServiceProvider
     protected function registerRoutes()
     {
         Route::group([
-            'prefix'     => config('translation-organizer.path'),
-            'namespace'  => 'Pinetcodev\LaravelTranslationOrganizer\Http\Controllers',
+            'prefix' => config('translation-organizer.path'),
+            'namespace' => 'Pinetcodev\LaravelTranslationOrganizer\Http\Controllers',
         ], function () {
-            $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         });
     }
 }
