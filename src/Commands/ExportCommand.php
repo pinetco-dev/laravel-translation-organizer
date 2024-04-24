@@ -63,6 +63,10 @@ class ExportCommand extends Command
         } elseif ($json) {
             $this->info('Done writing JSON language files for translation strings');
         }
+
+        $this->manager->replaceSlash();
+
+        $this->info('Slash replaced successfully in all translation files within the lang directory.');
     }
 
     /**

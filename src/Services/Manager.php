@@ -8,6 +8,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Pinetcodev\LaravelTranslationOrganizer\Events\TranslationsExportedEvent;
 use Pinetcodev\LaravelTranslationOrganizer\Models\Translation;
@@ -656,5 +657,18 @@ class Manager
 
         return preg_replace('/&amp;gt;/', '>', $content);
 
+    }
+
+    public function replaceSlash()
+    {
+        $base = $this->app['path.lang'];
+
+        $files = File::allFiles($base);
+
+        foreach ($files as $file) {
+            $contents = file_get_contents($file);
+            $contents = str_replace('\/', '/', $contents);
+            file_put_contents($file, $contents);
+        }
     }
 }
