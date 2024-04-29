@@ -550,7 +550,7 @@ class Manager
 
         $widget = $this->render();
         $pos = strripos($content, '</body>');
-        if (false !== $pos) {
+        if ($pos !== false) {
             $content = substr($content, 0, $pos).$widget.substr($content, $pos);
         } else {
             $content = $content.$widget;
