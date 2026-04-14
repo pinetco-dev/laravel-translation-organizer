@@ -13,7 +13,7 @@
     </div>
     <div class="w-full p-3 grid grid-cols-2 gap-6">
         <div class="w-full border py-2 px-4 flex items-center rounded-md space-x-2 bg-gray-50">
-            <x-iconsax-lin-folder class="h-5 text-gray-500" />
+            <i class="fa-regular fa-folder h-5 text-gray-500"></i>
             <span class="text-sm text-gray-500 truncate">{{ $phrase->file->file_name }}</span>
         </div>
 

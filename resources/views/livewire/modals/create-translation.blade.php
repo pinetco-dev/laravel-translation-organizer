@@ -3,10 +3,15 @@
         <h3 class="text-base font-semibold leading-6 text-gray-700">
             Add a new language
         </h3>
-        <x-iconsax-lin-add class="w-6 h-6 text-gray-400" />
+        <i class="fa-regular fa-plus w-6 h-6 text-gray-400"></i>
     </div>
 
-    <x-native-select placeholder="Select a language" :options="$languages" wire:model="language" option-label="name" option-value="id" />
+    <select wire:model="language" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="">Select a language</option>
+        @foreach($languages as $lang)
+            <option value="{{ $lang['id'] }}">{{ $lang['name'] }}</option>
+        @endforeach
+    </select>
 
     <div class="flex items-center space-x-4 rtl:space-x-reverse mt-6">
         <button type="button" wire:click="create" wire:loading.attr="disabled" class="flex-grow inline-flex items-center justify-center px-4 py-2 font-semibold leading-6 text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 transition ease-in-out duration-150 disabled:cursor-not-allowed">
