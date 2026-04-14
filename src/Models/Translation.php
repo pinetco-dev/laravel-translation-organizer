@@ -2,6 +2,7 @@
 
 namespace Pinetcodev\LaravelTranslationOrganizer\Models;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,8 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $group
  * @property string $key
  * @property string $value
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class Translation extends Model
 {

@@ -2,6 +2,4 @@
 
 namespace Pinetcodev\LaravelTranslationOrganizer;
 
-class LaravelTranslationOrganizer
-{
-}
+class LaravelTranslationOrganizer {}

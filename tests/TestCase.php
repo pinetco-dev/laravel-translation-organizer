@@ -42,7 +42,7 @@ class TestCase extends UnitTestCase
         */
     }
 
-    public function testKeyIsExistsInDatabase()
+    public function test_key_is_exists_in_database()
     {
         $this->get('/')->assertOk();
 
@@ -56,7 +56,7 @@ class TestCase extends UnitTestCase
         ]);
     }
 
-    public function testKeyIsExistsInJsonLanguageFile()
+    public function test_key_is_exists_in_json_language_file()
     {
         Livewire::test(CreateSourceKey::class)
             ->set('key', 'random text')
@@ -79,7 +79,7 @@ class TestCase extends UnitTestCase
         }
     }
 
-    public function testKeyIsExistsInCustomLanguageFile()
+    public function test_key_is_exists_in_custom_language_file()
     {
         $file = 'new-file';
 
@@ -100,7 +100,7 @@ class TestCase extends UnitTestCase
         }
     }
 
-    public function testImportCommand()
+    public function test_import_command()
     {
         $this->artisan('translation-organizer:import');
 

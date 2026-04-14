@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Pinetcodev\LaravelTranslationOrganizer\Events\TranslationsExportedEvent;
 use Pinetcodev\LaravelTranslationOrganizer\Models\Translation;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,13 +21,13 @@ class Manager
 {
     const JSON_GROUP = '_json';
 
-    /** @var \Illuminate\Contracts\Foundation\Application */
+    /** @var Application */
     protected $app;
 
-    /** @var \Illuminate\Filesystem\Filesystem */
+    /** @var Filesystem */
     protected $files;
 
-    /** @var \Illuminate\Contracts\Events\Dispatcher */
+    /** @var Dispatcher */
     protected $events;
 
     protected $config;
@@ -65,7 +66,7 @@ class Manager
     public function importTranslations($replace = false, $base = null, $import_group = false)
     {
         $counter = 0;
-        //allows for vendor lang files to be properly recorded through recursion.
+        // allows for vendor lang files to be properly recorded through recursion.
         $vendor = true;
         if ($base == null) {
             $base = $this->app['path.lang'];
@@ -75,7 +76,7 @@ class Manager
         foreach ($this->files->directories($base) as $langPath) {
             $locale = basename($langPath);
 
-            //import langfiles for each vendor
+            // import langfiles for each vendor
             if ($locale == 'vendor') {
                 foreach ($this->files->directories($langPath) as $vendor) {
                     $counter += $this->importTranslations($replace, $vendor);
@@ -155,7 +156,7 @@ class Manager
             ->first();
 
         if (empty($translation)) {
-            $translation = new Translation();
+            $translation = new Translation;
             $translation->fill([
                 'locale' => $locale,
                 'group' => $group,
@@ -208,10 +209,10 @@ class Manager
             "\s*[\),]";                                    // Close parentheses or new parameter
 
         // Find all PHP + Twig files in the app folder, except for storage
-        $finder = new Finder();
+        $finder = new Finder;
         $finder->in($path)->exclude('storage')->exclude('vendor')->name('*.php')->name('*.twig')->name('*.vue')->files();
 
-        /** @var \Symfony\Component\Finder\SplFileInfo $file */
+        /** @var SplFileInfo $file */
         foreach ($finder as $file) {
             // Search the current file for the pattern
             if (preg_match_all("/$groupPattern/siU", $file->getContents(), $matches)) {
@@ -229,9 +230,9 @@ class Manager
                         continue;
                     }
 
-                    //TODO: This can probably be done in the regex, but I couldn't do it.
-                    //skip keys which contain namespacing characters, unless they also contain a
-                    //space, which makes it JSON.
+                    // TODO: This can probably be done in the regex, but I couldn't do it.
+                    // skip keys which contain namespacing characters, unless they also contain a
+                    // space, which makes it JSON.
                     if (! (Str::contains($key, '::') && Str::contains($key, '.'))
                         || Str::contains($key, ' ')) {
                         $stringKeys[] = $key;
@@ -357,7 +358,7 @@ class Manager
             Translation::ofTranslatedGroup(self::JSON_GROUP)->update(['status' => Translation::STATUS_SAVED]);
         }
 
-        $this->events->dispatch(new TranslationsExportedEvent());
+        $this->events->dispatch(new TranslationsExportedEvent);
     }
 
     public function exportAllTranslations()
@@ -372,7 +373,7 @@ class Manager
             }
         }
 
-        $this->events->dispatch(new TranslationsExportedEvent());
+        $this->events->dispatch(new TranslationsExportedEvent);
     }
 
     protected function makeTree($translations, $json = false)
@@ -489,9 +490,9 @@ class Manager
     /**
      * Modify the response and inject the translation model (or data in headers)
      *
-     * @param  \Symfony\Component\HttpFoundation\Request  $request
-     * @param  \Symfony\Component\HttpFoundation\Response  $response
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  Request  $request
+     * @param  Response  $response
+     * @return Response
      */
     public function modifyResponse($request, $response)
     {
@@ -643,7 +644,7 @@ class Manager
     protected function storeData()
     {
         $config = $this->app['config'];
-        //if ($config->get('translation-organizer.enabled')) {
+        // if ($config->get('translation-organizer.enabled')) {
         $driver = $config->get('translation-organizer.storage.driver', 'file');
         cache()->driver($driver)->set($this->requestId, $this->data);
         //        }

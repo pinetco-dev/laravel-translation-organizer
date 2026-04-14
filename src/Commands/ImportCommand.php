@@ -22,7 +22,7 @@ class ImportCommand extends Command
      */
     protected $description = 'Import translations from the PHP sources';
 
-    /** @var \Pinetcodev\LaravelTranslationOrganizer\Services\Manager */
+    /** @var Manager */
     protected $manager;
 
     public function __construct(Manager $manager)

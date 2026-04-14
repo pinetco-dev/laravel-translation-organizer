@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: kgbot
@@ -15,7 +16,5 @@ class TranslationsExportedEvent
      *
      * @return void
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 }

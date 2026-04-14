@@ -11,7 +11,7 @@ use Pinetcodev\LaravelTranslationOrganizer\Models\Translation;
 
 class TranslationsList extends Component
 {
-    use withPagination;
+    use WithPagination;
 
     public $isOpen = false;
 

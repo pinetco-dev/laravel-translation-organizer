@@ -10,9 +10,7 @@ use Pinetcodev\LaravelTranslationOrganizer\Models\Translation;
 
 class TranslationController extends Controller
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function index(): View
     {
@@ -81,7 +79,7 @@ class TranslationController extends Controller
                         ->first();
 
                     if (empty($result)) {
-                        $result = new Translation();
+                        $result = new Translation;
                         $result->fill([
                             'locale' => $locale,
                             'group' => $translation['group'],
